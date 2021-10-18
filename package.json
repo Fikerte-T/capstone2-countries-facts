@@ -1,5 +1,5 @@
 {
-  "name": "to-do-list-minimalist",
+  "name": "capstone2-kanban",
   "version": "1.0.0",
   "description": "![](https://img.shields.io/badge/Microverse-blueviolet)",
   "private": true,
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kingjosh007/to-do-list-minimalist.git"
+    "url": "git+https://github.com/Kingjosh007/capstone2-kanban.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Kingjosh007/to-do-list-minimalist/issues"
+    "url": "https://github.com/Fikerte-T/capstone2-kanban/issues"
   },
-  "homepage": "https://github.com/Kingjosh007/to-do-list-minimalist#readme",
+  "homepage": "https://github.com/Fikerte-T/capstone2-kanban#readme",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.3.0",
