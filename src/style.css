@@ -1,7 +1,94 @@
-body {
-  background-color: bisque;
+:root {
+  --primary-color-1: rgb(53, 26, 104);
+  --primary-color-2: #367780;
 }
 
-.hello {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  text-align: center;
+  margin-top: 4.5em;
+}
+
+.navbar {
+  background-color: var(--primary-color-1) !important;
+  box-shadow: 0 4px 2px -2px var(--primary-color-2);
+  padding-right: 5%;
+  z-index: 20;
+}
+
+.navbar .navbar-nav {
+  display: flex;
+  gap: 0.5em;
+  text-align: left;
+  padding-left: 10%;
+}
+
+.navbar-brand {
+  padding: 10px;
+  background-color: var(--primary-color-2);
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.navbar-brand .part1 {
+  color: rgb(54, 41, 29);
+}
+
+.navbar-brand .part2 {
+  color: rgb(198, 21, 21);
+}
+
+.navbar .nav-separator {
+  cursor: not-allowed;
+  display: none;
+}
+
+.overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  background-image: url("https://images.unsplash.com/photo-1600633349333-eebb43d01e23?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1800&q=80");
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-position: 0 0;
+  background-size: auto;
+  opacity: 0.45;
+  background-color: #140909;
+}
+
+footer {
+  background-color: var(--primary-color-1);
+  color: #bbb;
+  font-size: 12px;
+  padding: 5px;
+  text-align: left;
+  padding-left: 5%;
+}
+
+footer .fa-heart {
   color: red;
+}
+
+a {
+  color: #eee;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+footer a {
+  color: rgb(155, 116, 79);
+  font-weight: bold;
+  font-size: 12px;
+}
+
+a:hover {
+  color: rgb(192, 150, 33) !important;
 }
