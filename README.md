@@ -98,6 +98,7 @@ Give a ⭐️ if you like this project!
 ## Acknowledgments
 
 - Heartfelt thanks to [Microverse](https://www.microverse.org/)
+- Hat tip to [Lucas George Wendt](https://unsplash.com/@lucasgwendt) whose image was used from Unsplash.
 
 ## 📝 License
 
