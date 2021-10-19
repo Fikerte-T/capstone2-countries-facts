@@ -48,7 +48,7 @@ body {
   display: none;
 }
 
-.overlay {
+/* .overlay {
   position: absolute;
   width: 100vw;
   height: 100%;
@@ -62,7 +62,7 @@ body {
   background-size: 100%;
   opacity: 0.45;
   background-color: #140909;
-}
+} */
 
 footer {
   background-color: var(--primary-color-1);
@@ -91,4 +91,12 @@ footer a {
 
 a:hover {
   color: rgb(192, 150, 33) !important;
+}
+
+
+/* style for popup */
+
+.modal-container {
+  z-index: 2000000 !important;
+  border: 2px solid red;
 }
