@@ -6,7 +6,7 @@
 
 ## Introduction
 
-### About therequirements
+### About the requirements
 
 > This is the repo for the second capstone project in our Microverse journey. It is a group project created by [Kingjosh007][https://github.com/Kingjosh007] and [Fikerte-T][https://github.com/Fikerte-T]. 
 
