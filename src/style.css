@@ -1,6 +1,7 @@
 :root {
   --primary-color-1: rgb(53, 26, 104);
   --primary-color-2: #367780;
+  --secondary-color-1: #ddd;
 }
 
 *,
@@ -48,20 +49,20 @@ body {
   display: none;
 }
 
+main > * {
+  background-image: url("https://images.unsplash.com/photo-1600633349333-eebb43d01e23?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1");
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
 .overlay {
   position: absolute;
-  width: 100vw;
+  width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  z-index: 3;
-  background-image: url("https://images.unsplash.com/photo-1600633349333-eebb43d01e23?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1");
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-position: 0 0;
-  background-size: 100%;
-  opacity: 0.45;
-  background-color: #140909;
+  background-color: rgba(14, 2, 2, 0.8);
 }
 
 footer {
@@ -95,28 +96,30 @@ a:hover {
 
 .countriesGrid {
   display: flex;
-  z-index: 500;
-  opacity: 1;
   flex-wrap: wrap;
-  margin-inline: 10%;
+  margin-inline: 8%;
   gap: 15px;
 }
 
 .countriesGrid > * {
-  flex: 1 1 3em;
+  flex: 1 1 10em;
 }
 
 .country {
   display: flex;
   flex-direction: column;
   gap: 7px;
+  align-items: center;
+  box-shadow: 3px 4px 2px 3px var(--primary-color-2);
 }
 
-.country .flag {
-  max-width: 100px;
-}
-
-.flag img {
+.flag {
   width: 100%;
-  height: auto;
+  max-height: 100px;
+  box-shadow: -2px -2px 2px -2px var(--secondary-color-1);
+}
+
+.country h3 {
+  font-size: 20px;
+  font-family: 'Yaldevi', sans-serif;
 }
