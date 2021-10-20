@@ -28,7 +28,7 @@ const addClicksListener = () => {
   });
 };
 
-const displayAllCountries = (arr, sortCrit = 'a-z', limit = 300, filterStr = '') => {
+const displayAllCountries = (arr, sortCrit = 'a-z', limit = 30, filterStr = '') => {
   const arrToDisplay = arr.sort((a, b) => {
     if (a.name < b.name) return -1;
     return 1;

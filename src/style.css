@@ -1,6 +1,6 @@
 :root {
   --primary-color-1: rgb(53, 26, 104);
-  --primary-color-2: rgb(192, 150, 33);
+  --primary-color-2: rgb(180, 178, 68);
   --secondary-color-1: #ddd;
 }
 
@@ -68,7 +68,8 @@ body {
 }
 
 main {
-  padding-bottom: 10%;
+  padding-top: 4%;
+  padding-bottom: 15%;
   background-image: url("https://images.unsplash.com/photo-1600633349333-eebb43d01e23?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1");
   background-position: center;
   background-size: cover;
