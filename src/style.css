@@ -137,7 +137,7 @@ a:hover {
   width: 100%;
   height: auto;
   min-height: 90px;
-  max-height: 110px;
+  max-height: 130px;
   border: 2px solid #bbb;
 }
 
@@ -175,4 +175,22 @@ a:hover {
 
 .commentBtn button {
   font-size: 12px;
+}
+
+.paginationContainer {
+  display: flex;
+  margin-inline: 7%;
+  justify-content: flex-end;
+}
+
+.paginationContainer nav .pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.page-item.activeItem .page-link {
+  background-color: var(--primary-color-1) !important;
+  color: white !important;
+  transform: scale(1.1);
 }
