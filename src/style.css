@@ -1,6 +1,6 @@
 :root {
   --primary-color-1: rgb(53, 26, 104);
-  --primary-color-2: #367780;
+  --primary-color-2: #807f36;
   --secondary-color-1: #ddd;
 }
 
@@ -44,12 +44,31 @@ body {
   color: rgb(198, 21, 21);
 }
 
+.navbar-brand .icon {
+  color: rgb(235, 230, 69);
+  margin-left: 4px;
+}
+
+.icon .fa-globe {
+  color: rgb(14, 39, 151);
+  margin-right: 2px;
+}
+
 .navbar .nav-separator {
   cursor: not-allowed;
   display: none;
 }
 
-main > * {
+.navbar a.onit {
+  color: rgb(192, 150, 33) !important;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: unset;
+  pointer-events: none;
+}
+
+main {
+  padding-bottom: 10%;
   background-image: url("https://images.unsplash.com/photo-1600633349333-eebb43d01e23?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1");
   background-position: center;
   background-size: cover;
@@ -62,7 +81,7 @@ main > * {
   height: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(14, 2, 2, 0.8);
+  background-color: rgba(205, 247, 151, 0.2);
 }
 
 footer {
@@ -98,7 +117,7 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   margin-inline: 8%;
-  gap: 15px;
+  gap: 30px;
 }
 
 .countriesGrid > * {
@@ -115,11 +134,38 @@ a:hover {
 
 .flag {
   width: 100%;
-  max-height: 100px;
+  height: auto;
+  max-height: 110px;
   box-shadow: -2px -2px 2px -2px var(--secondary-color-1);
 }
 
-.country h3 {
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.nameAndLikes {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.nameAndLikes h5 {
   font-size: 20px;
   font-family: 'Yaldevi', sans-serif;
+}
+
+.nameAndLikes h6 .fa-heart{
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.commentBtn {
+  justify-self: end;
+}
+
+.commentBtn button {
+  font-size: 12px;
 }
