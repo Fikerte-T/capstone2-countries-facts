@@ -1,12 +1,10 @@
 import './style.css';
 
-import { countryInfo } from './popup.js';
+import { countryInfo, getComments, createNewComment,commentBtn } from './popup.js';
 
 
-let countryname = 
-        {
-        name: "Bangladesh",
-        flag: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg"
-        }
-    ;
+let countryname = "Bangladesh";
+//addclicklistener function
 countryInfo(countryname);
+getComments(countryname);
+commentBtn.addEventListener('click', createNewComment(countryname));

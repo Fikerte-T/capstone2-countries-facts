@@ -1,13 +1,16 @@
 // import './style.css';
 
-import { postStuff, getStuff, countriesAPIBaseURL } from "./api-stuff";
-
-let displayInfo = document.querySelector('.country-info')
+import { postStuff, getStuff, countriesAPIBaseURL, involvementCommentsEndPoint, involvementLikesEndPoint } from "./api-stuff";
+const userName = document.querySelectorAll('.username');
+const comment = document.querySelectorAll('.comment');
+let displayInfo = document.querySelector('.country-info');
+let displayComments = document.querySelectorAll('.comments');
+const commentBtn = document.querySelectorAll('.comment-btn');
 const capitalUrl = `${countriesAPIBaseURL}capital`;
 const populationUrl = `${countriesAPIBaseURL}population/cities`;
 const dialcodeUrl = `${countriesAPIBaseURL}codes`;
 const currencyUrl = `${countriesAPIBaseURL}currency`;
-const flagUrl=  `${countriesAPIBaseURL}flag/images`
+const flagUrl=  `${countriesAPIBaseURL}flag/images`;
 
 
 const countryInfo = async (countryname) => {
@@ -17,27 +20,22 @@ const countryInfo = async (countryname) => {
     const dialcode = await getDialcode(countryname);
     const population = await getPopulation(capital);
     displayInfo.innerHTML = `
-    <img class="flag img-fluid rounded mx-auto d-block" src="${flag}" alt="country flag">
-    <h3 class="country-name">${countryname.name}</h3>
+    <img class="img-fluid rounded mx-auto d-block" src="${flag}" alt="country flag">
+    <h3>${countryname}</h3>
     <div class="d-inline-flex justify-content-between">
         <div class ="m-3">
-            <p class="capital">Capital: ${capital}</p>
-            <p class="population">Population: ${population[0].value} in year ${population[0].year}</p>
+            <p>Capital: ${capital}</p>
+            <p>Population: ${population[0].value} in year ${population[0].year}</p>
         </div >
         <div class ="m-3">
-            <p class="currency">Currency: ${currency}</p>
-            <p class="dial-code">Dial-Code: ${dialcode}</p>
+            <p>Currency: ${currency}</p>
+            <p>Dial-Code: ${dialcode}</p>
         </div>
     </div>
     `;   
 }
 
-// let countryname = 
-//         {
-//         name: "Bangladesh",
-//         flag: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg"
-//         }
-//     ;
+
 const getDialcode = async (countryname) => {
     let response = await postStuff(dialcodeUrl, {
         "country": "bangladesh"
@@ -84,7 +82,33 @@ const getCapital = async (countryname) => {
     return capitalData;
 }
 
-// countryInfo(countryname);
+//  create new comment and display comments
+const displayComment = async(arr) => {
+    arr.forEach(comment => {
+        displayComments.innerHTML = `
+        <div class="d-inline-flex justify-content-between">
+            <p>${comment.creation_date}</p>
+            <p>${comment.username}: </p>
+            <p>${comment.comment}</p>
+        </div>
+        `
+    })
+}
 
+const createNewComment = async (countryname) => {
+    let response = await postStuff(involvementCommentsEndPoint, {
+        "item_id": countryname,
+        "username": userName.value,
+        "comment": comment.value
+    })
+    getComments(countryname);
+    userName.value = '';
+    comment.value = '';
+}
 
-export {countryInfo};
+const getComments = async (countryname) => {
+    let response = await getStuff(`${involvementCommentsEndPoint}?item_id=${countryname}`);
+    let commentsArr = response.data;
+    displayComment(commentsArr); 
+}
+export {countryInfo, getComments, createNewComment, commentBtn};
