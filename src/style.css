@@ -1,6 +1,6 @@
 :root {
   --primary-color-1: rgb(53, 26, 104);
-  --primary-color-2: #807f36;
+  --primary-color-2: #b3b13f;
   --secondary-color-1: #ddd;
 }
 
@@ -121,7 +121,7 @@ a:hover {
 }
 
 .countriesGrid > * {
-  flex: 1 1 10em;
+  flex: 1 1 9.5em;
 }
 
 .country {
@@ -157,9 +157,15 @@ a:hover {
   font-family: 'Yaldevi', sans-serif;
 }
 
-.nameAndLikes h6 .fa-heart{
+.nameAndLikes h6 .fa-heart {
   margin-right: 5px;
   cursor: pointer;
+}
+
+.nameAndLikes h6 .fa-heart:hover {
+  color: red;
+  background-color: red;
+  transform: scale(1.1);
 }
 
 .commentBtn {

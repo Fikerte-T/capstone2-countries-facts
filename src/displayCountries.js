@@ -8,10 +8,21 @@ const codeForSingleCountry = (country) => `<div class="card country">
                         <h6><i class="far fa-heart"></i><span class="nbLikes" data-ctr-likes="${country.name}">0</span> likes</h6>
                     </div>
                     <div class="commentBtn">
-                         <button type="button"><i class="fas fa-comment"></i> Comments and facts </button>
+                         <button type="button" data-country="${country.name}"><i class="fas fa-comment"></i> Comments and facts </button>
                     </div>
                 </div>
             </div>`;
+
+const addClicksListener = () => {
+  const buttonsArr = [...document.querySelectorAll('.commentBtn button')];
+  buttonsArr.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const country = e.target.getAttribute('data-country');
+      alert(country);
+    });
+  });
+};
+
 const displayAllCountries = (arr, sortCrit = 'a-z', limit = 300, filterStr = '') => {
   const arrToDisplay = arr.sort((a, b) => {
     if (a.name < b.name) return -1;
@@ -23,6 +34,7 @@ const displayAllCountries = (arr, sortCrit = 'a-z', limit = 300, filterStr = '')
   const htmlCode = arrToDisplay.map((el) => codeForSingleCountry(el)).join('');
   // eslint-disable-next-line no-undef
   $('#countriesGrid').html(htmlCode);
+  addClicksListener();
 };
 
 (async () => {
