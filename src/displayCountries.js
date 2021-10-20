@@ -1,7 +1,12 @@
-import { getStuff, postStuff, countriesAndFlagsURL } from './api-stuff.js';
+import { getStuff, countriesAndFlagsURL } from './api-stuff.js';
+import { mf } from './missingFlags.js';
 
-const codeForSingleCountry = (country) => `<div class="card country">
-               <img class="card-img-top flag" src="${country.flag}">
+const codeForSingleCountry = (country) => {
+  let flagUrl = country.flag;
+  if (mf[country.name]) flagUrl = mf[country.name];
+
+  return `<div class="card country">
+               <img class="card-img-top flag" src="${flagUrl}">
                 <div class="card-body">
                     <div class="nameAndLikes">
                         <h5 class="card-title">${country.name}</h5>
@@ -11,14 +16,14 @@ const codeForSingleCountry = (country) => `<div class="card country">
                          <button type="button" data-country="${country.name}"><i class="fas fa-comment"></i> Comments and facts </button>
                     </div>
                 </div>
-            </div>`;
+        </div>`;
+};
 
 const addClicksListener = () => {
   const buttonsArr = [...document.querySelectorAll('.commentBtn button')];
   buttonsArr.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       const country = e.target.getAttribute('data-country');
-      alert(country);
     });
   });
 };
@@ -30,7 +35,6 @@ const displayAllCountries = (arr, sortCrit = 'a-z', limit = 300, filterStr = '')
   })
     .slice(0, limit);
 
-  console.log(arrToDisplay);
   const htmlCode = arrToDisplay.map((el) => codeForSingleCountry(el)).join('');
   // eslint-disable-next-line no-undef
   $('#countriesGrid').html(htmlCode);

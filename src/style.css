@@ -1,6 +1,6 @@
 :root {
   --primary-color-1: rgb(53, 26, 104);
-  --primary-color-2: #b3b13f;
+  --primary-color-2: rgb(192, 150, 33);
   --secondary-color-1: #ddd;
 }
 
@@ -60,7 +60,7 @@ body {
 }
 
 .navbar a.onit {
-  color: rgb(192, 150, 33) !important;
+  color: var(--primary-color-2) !important;
   font-weight: bold;
   font-size: 18px;
   cursor: unset;
@@ -135,8 +135,9 @@ a:hover {
 .flag {
   width: 100%;
   height: auto;
+  min-height: 90px;
   max-height: 110px;
-  box-shadow: -2px -2px 2px -2px var(--secondary-color-1);
+  border: 2px solid #bbb;
 }
 
 .card-body {
@@ -164,7 +165,6 @@ a:hover {
 
 .nameAndLikes h6 .fa-heart:hover {
   color: red;
-  background-color: red;
   transform: scale(1.1);
 }
 
