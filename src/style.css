@@ -93,8 +93,6 @@ a:hover {
   color: rgb(192, 150, 33) !important;
 }
 
-
-/* style for popup */
 .comments {
   display: flex;
   flex-direction: column;
