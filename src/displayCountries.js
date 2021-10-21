@@ -77,6 +77,25 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
       }
     });
   }
+
+  // Previous and next buttons
+  document.querySelector('.nextBtn').addEventListener('click', (e) => {
+    if(!e.target.classList.contains('disabled')){
+        let activePage = Number(document.querySelector('.page-item.activeItem').getAttribute('data-number'));
+        let lastPage = Number(allNbItems[allNbItems.length - 1].getAttribute('data-number'));
+        if(activePage != lastPage)
+        {
+            allNbItems[activePage-1].parentElement.classList.remove('activeItem');
+            allNbItems[activePage].parentElement.classList.add('activeItem');
+            const from = activePage * nbPp;
+                // eslint-disable-next-line no-use-before-define
+            displayArrayOfCountries(filteredCountriesArr,  false, 'a-z', from, nbPp);
+            if(activePage === (lastPage - 1)) {
+                document.querySelector('.nextBtn').classList.add('disabled');
+            }
+        }
+    }
+  });
 };
 
 const handlePagination = (nbElts, nbPerPage) => {
