@@ -5,7 +5,9 @@ import { mf } from './missingFlags.js';
 
 let allCountriesArr = [];
 let filteredCountriesArr = [];
-let searchInput = document.querySelector('#searchCountriesInput');
+const searchInput = document.querySelector('#searchCountriesInput');
+const sortBtn = document.querySelector('.sortBtn');
+const dropdownItems = [...document.querySelectorAll('.dropdown-item')];
 let allCountriesNb = 0;
 const searchFeedback = document.querySelector('.searchFeedback');
 
@@ -67,15 +69,15 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
         }
       }
       if (previousNb !== nb) {
-        console.log(e.target);
         allNbItems.forEach((nbii) => {
           nbii.parentElement.classList.remove('activeItem');
         });
         e.target.parentElement.classList.add('activeItem');
         e.target.classList.add('activeItem');
         const from = (nb - 1) * nbPp;
+        const param = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
         // eslint-disable-next-line no-use-before-define
-        displayArrayOfCountries(filteredCountriesArr, false, 'a-z', from, nbPp);
+        displayArrayOfCountries(filteredCountriesArr, false, param, from, nbPp);
       }
     });
   }
@@ -89,8 +91,9 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
         allNbItems[activePage - 1].parentElement.classList.remove('activeItem');
         allNbItems[activePage - 2].parentElement.classList.add('activeItem');
         const from = (activePage - 2) * nbPp;
+        const param = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
         // eslint-disable-next-line no-use-before-define
-        displayArrayOfCountries(filteredCountriesArr, false, 'a-z', from, nbPp);
+        displayArrayOfCountries(filteredCountriesArr, false, param, from, nbPp);
         if ((activePage - 1) === 1) {
           document.querySelector('.previousBtn').classList.add('disabled');
         }
@@ -101,13 +104,14 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
     if (!e.target.classList.contains('disabled')) {
       const activePage = Number(document.querySelector('.page-item.activeItem').getAttribute('data-number'));
       const lastPage = Number(allNbItems[allNbItems.length - 1].getAttribute('data-number'));
-      if (activePage != lastPage) {
+      if (activePage !== lastPage) {
         document.querySelector('.previousBtn').classList.remove('disabled');
         allNbItems[activePage - 1].parentElement.classList.remove('activeItem');
         allNbItems[activePage].parentElement.classList.add('activeItem');
         const from = activePage * nbPp;
+        const param = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
         // eslint-disable-next-line no-use-before-define
-        displayArrayOfCountries(filteredCountriesArr, false, 'a-z', from, nbPp);
+        displayArrayOfCountries(filteredCountriesArr, false, param, from, nbPp);
         if (activePage === (lastPage - 1)) {
           document.querySelector('.nextBtn').classList.add('disabled');
         }
@@ -142,11 +146,18 @@ const handlePagination = (nbElts, nbPerPage) => {
 };
 
 const displayArrayOfCountries = (arr, shouldHandlePagination = false, sortCrit = 'a-z', from = 0, limit = 24) => {
-  const arrToDisplay = arr.sort((a, b) => {
-    if (a.name < b.name) return -1;
-    return 1;
-  })
-    .slice(from, from + limit);
+  filteredCountriesArr = arr.sort((a, b) => {
+    let value = 1;
+    switch (sortCrit) {
+      case 'a-z': if (a.name > b.name) value = 1; else value = -1;
+        break;
+      case 'z-a': if (a.name > b.name) value = -1; else value = 1;
+        break;
+      default: value = 1;
+    }
+    return value;
+  });
+  const arrToDisplay = filteredCountriesArr.slice(from, from + limit);
 
   $('#countriesGrid').html('');
   const htmlCode = arrToDisplay.map((el) => codeForSingleCountry(el)).join('');
@@ -159,24 +170,38 @@ const displayArrayOfCountries = (arr, shouldHandlePagination = false, sortCrit =
 };
 
 const handleSearch = () => {
-searchInput.addEventListener('input', (e) => {
+  searchInput.addEventListener('input', () => {
     const str = searchInput.value;
-    if(str.length > 0)
-    {
-        filteredCountriesArr = allCountriesArr.filter((ctr) => ctr.name.toLowerCase().includes(str.toLowerCase()));
+    const strLc = str.toLowerCase();
+    if (str.length > 0) {
+      filteredCountriesArr = allCountriesArr.filter((c) => c.name.toLowerCase().includes(strLc));
+    } else {
+      filteredCountriesArr = allCountriesArr;
     }
-    else {
-        filteredCountriesArr = allCountriesArr;
-    }
-    if(filteredCountriesArr.length > 0) {
-        const text = filteredCountriesArr.length == 1 ? 'country': 'countries';
-        searchFeedback.innerHTML = `<p style="font-size: 22px; padding:7px; border-radius: 10px; background-color: #7ac481; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">✅</span> Displaying <b>${filteredCountriesArr.length}</b> ${text}.<p>`;
-    }
-    else {
-        searchFeedback.innerHTML = `<p style="font-size: 22px; padding:10px; border-radius: 10px; background-color: #fc7290; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">🥺</span>No result. Nothing to display.</p>`;
+    if (filteredCountriesArr.length > 0) {
+      const text = filteredCountriesArr.length === 1 ? 'country' : 'countries';
+      searchFeedback.innerHTML = `<p style="font-size: 22px; padding:7px; border-radius: 10px; background-color: #7ac481; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">✅</span> Displaying <b>${filteredCountriesArr.length}</b> ${text}.<p>`;
+    } else {
+      searchFeedback.innerHTML = '<p style="font-size: 22px; padding:10px; border-radius: 10px; background-color: #fc7290; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">🥺</span>No result. Nothing to display.</p>';
     }
     displayArrayOfCountries(filteredCountriesArr, true);
-})
+  });
+};
+
+const handleSort = () => {
+  dropdownItems.forEach((di, i, w) => {
+    di.addEventListener('click', (e) => {
+      e.preventDefault();
+      const text = di.getAttribute('data-text');
+      const sortParam = di.getAttribute('data-sort-param');
+      w.forEach((ww) => {
+        ww.classList.remove('selected');
+      });
+      dropdownItems[i].classList.add('selected');
+      sortBtn.textContent = text;
+      displayArrayOfCountries(filteredCountriesArr, true, sortParam);
+    });
+  });
 };
 
 (async () => {
@@ -188,5 +213,6 @@ searchInput.addEventListener('input', (e) => {
     filteredCountriesArr = countriesData.data;
     displayArrayOfCountries(allCountriesArr, true);
     handleSearch();
+    handleSort();
   }
 })();

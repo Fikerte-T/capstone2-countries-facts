@@ -182,6 +182,7 @@ a:hover {
   display: flex;
   margin-inline: 7%;
   justify-content: flex-end;
+  cursor: pointer;
 }
 
 .paginationContainer nav .pagination {
@@ -201,7 +202,8 @@ a:hover {
   cursor: pointer;
 }
 
-.nextBtn.disabled, .previousBtn.nextBtn.disabled {
+.nextBtn.disabled,
+.previousBtn.nextBtn.disabled {
   cursor: not-allowed;
 }
 
