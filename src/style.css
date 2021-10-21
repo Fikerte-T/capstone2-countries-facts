@@ -208,3 +208,19 @@ a:hover {
 .searchFeedback {
   text-align: center;
 }
+
+.paramsBar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.sortBtn,
+.sortBtn:hover {
+  background-color: var(--primary-color-1);
+  color: white;
+}
+
+.dropdown-item.selected {
+  background-color: var(--primary-color-2);
+}

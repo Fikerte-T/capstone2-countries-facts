@@ -43,9 +43,23 @@
         </div>
         <div class="countriesContainer">
             <div class="searchFeedback">
-                
+
             </div>
             <div class="paramsBar">
+                <div class="sortParams">
+                    <div class="btn-group">
+                        <button type="button" class="btn dropdown-toggle sortBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                          Sort
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item selected" href="#" data-sort-param="a-z" data-text="Sorting A-Z">Alphabetical order (A...Z)</a></li>
+                          <li><a class="dropdown-item" href="#" data-sort-param="z-a" data-text="Sorting Z-A">Reverse alphabetical order (Z...A)</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#" data-sort-param="mlf" data-text="Showing most liked first">Most liked first</a></li>
+                          <li><a class="dropdown-item" href="#" data-sort-param="llf" data-text="Showing least liked first">Least liked first</a></li>
+                        </ul>
+                      </div>
+                </div>
                  <div class="paginationContainer"></div>
             </div>
             <div id="paginationContainer"></div>

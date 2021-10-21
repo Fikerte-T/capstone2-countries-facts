@@ -170,7 +170,7 @@ searchInput.addEventListener('input', (e) => {
     }
     if(filteredCountriesArr.length > 0) {
         const text = filteredCountriesArr.length == 1 ? 'country': 'countries';
-        searchFeedback.innerHTML = `<p style="font-size: 22px; padding:7px; border-radius: 10px; background-color: #72fcb2; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">✅</span> Displaying <b>${filteredCountriesArr.length}</b> ${text}.<p>`;
+        searchFeedback.innerHTML = `<p style="font-size: 22px; padding:7px; border-radius: 10px; background-color: #7ac481; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">✅</span> Displaying <b>${filteredCountriesArr.length}</b> ${text}.<p>`;
     }
     else {
         searchFeedback.innerHTML = `<p style="font-size: 22px; padding:10px; border-radius: 10px; background-color: #fc7290; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">🥺</span>No result. Nothing to display.</p>`;
