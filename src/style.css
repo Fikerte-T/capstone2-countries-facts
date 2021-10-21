@@ -95,8 +95,12 @@ a:hover {
 
 
 /* style for popup */
+.comments {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
 
-.modal-container {
-  z-index: 2000000 !important;
-  border: 2px solid red;
+.comments div {
+  gap: 10px;
 }

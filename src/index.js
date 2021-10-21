@@ -1,10 +1,10 @@
 import './style.css';
 
-import { countryInfo, getComments, createNewComment,commentBtn } from './popup.js';
+import {
+  countryInfo, getComments,
+} from './popup.js';
 
+const countryname = 'Bangladesh';
 
-let countryname = "Bangladesh";
-//addclicklistener function
 countryInfo(countryname);
 getComments(countryname);
-commentBtn.addEventListener('click', createNewComment(countryname));
