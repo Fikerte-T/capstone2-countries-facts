@@ -7,6 +7,9 @@ let allCountriesArr = [];
 let filteredCountriesArr = [];
 const searchInput = document.querySelector('#searchCountriesInput');
 const sortBtn = document.querySelector('.sortBtn');
+const { nbPerPageForm } = document.forms;
+const { nbPerPageInput } = nbPerPageForm;
+const allCountriesLink = document.querySelector('#allCountriesLink');
 const dropdownItems = [...document.querySelectorAll('.dropdown-item')];
 let allCountriesNb = 0;
 const searchFeedback = document.querySelector('.searchFeedback');
@@ -179,12 +182,18 @@ const handleSearch = () => {
       filteredCountriesArr = allCountriesArr;
     }
     if (filteredCountriesArr.length > 0) {
-      const text = filteredCountriesArr.length === 1 ? 'country' : 'countries';
-      searchFeedback.innerHTML = `<p style="font-size: 22px; padding:7px; border-radius: 10px; background-color: #7ac481; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">✅</span> Displaying <b>${filteredCountriesArr.length}</b> ${text}.<p>`;
+      if (filteredCountriesArr.length === allCountriesNb) {
+        searchFeedback.innerHTML = '';
+      } else {
+        const text = filteredCountriesArr.length === 1 ? 'country' : 'countries';
+        searchFeedback.innerHTML = `<p style="font-size: 22px; padding:7px; border-radius: 10px; background-color: #7ac481; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">✅</span> Displaying <b>${filteredCountriesArr.length}</b> ${text}.<p>`;
+      }
     } else {
       searchFeedback.innerHTML = '<p style="font-size: 22px; padding:10px; border-radius: 10px; background-color: #fc7290; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">🥺</span>No result. Nothing to display.</p>';
     }
-    displayArrayOfCountries(filteredCountriesArr, true);
+    const sortParam = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
+    const nb = Number(nbPerPageInput.value);
+    displayArrayOfCountries(filteredCountriesArr, true, sortParam, 0, nb);
   });
 };
 
@@ -194,13 +203,35 @@ const handleSort = () => {
       e.preventDefault();
       const text = di.getAttribute('data-text');
       const sortParam = di.getAttribute('data-sort-param');
+      const nb = Number(nbPerPageInput.value);
       w.forEach((ww) => {
         ww.classList.remove('selected');
       });
       dropdownItems[i].classList.add('selected');
       sortBtn.textContent = text;
-      displayArrayOfCountries(filteredCountriesArr, true, sortParam);
+      displayArrayOfCountries(filteredCountriesArr, true, sortParam, 0, nb);
     });
+  });
+};
+
+const handleNbChange = () => {
+  nbPerPageForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nb = Number(nbPerPageInput.value);
+    const sortParam = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
+    displayArrayOfCountries(filteredCountriesArr, true, sortParam, 0, nb);
+  });
+};
+
+const handleDisplayAll = () => {
+  allCountriesLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    filteredCountriesArr = allCountriesArr;
+    const nb = Number(nbPerPageInput.value);
+    const sortParam = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
+    searchInput.value = '';
+    searchFeedback.innerHTML = '';
+    displayArrayOfCountries(allCountriesArr, true, sortParam, 0, nb);
   });
 };
 
@@ -212,7 +243,9 @@ const handleSort = () => {
     document.querySelector('#allCountriesLink').textContent = `All countries (${allCountriesNb})`;
     filteredCountriesArr = countriesData.data;
     displayArrayOfCountries(allCountriesArr, true);
+    handleDisplayAll();
     handleSearch();
     handleSort();
+    handleNbChange();
   }
 })();

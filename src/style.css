@@ -19,7 +19,7 @@ body {
   background-color: var(--primary-color-1) !important;
   box-shadow: 0 4px 2px -2px var(--primary-color-2);
   padding-right: 5%;
-  z-index: 20;
+  z-index: 20000;
 }
 
 .navbar .navbar-nav {
@@ -63,8 +63,12 @@ body {
   color: var(--primary-color-2) !important;
   font-weight: bold;
   font-size: 18px;
-  cursor: unset;
-  pointer-events: none;
+  cursor: pointer;
+}
+
+.navbar a.onit:hover {
+  color: rgb(235, 230, 69) !important;
+  text-decoration: underline;
 }
 
 main {
@@ -180,7 +184,6 @@ a:hover {
 
 .paginationContainer {
   display: flex;
-  margin-inline: 7%;
   justify-content: flex-end;
   cursor: pointer;
 }
@@ -207,6 +210,18 @@ a:hover {
   cursor: not-allowed;
 }
 
+#searchCountriesInput {
+  font-family: 'Yaldevi', sans-serif;
+  font-weight: bold;
+  font-size: 19px;
+}
+
+#searchCountriesInput:placeholder-shown {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  font-size: 15px;
+}
+
 .searchFeedback {
   text-align: center;
 }
@@ -217,6 +232,10 @@ a:hover {
   justify-content: space-evenly;
 }
 
+.paramsBar > * {
+  margin-top: 20px;
+}
+
 .sortBtn,
 .sortBtn:hover {
   background-color: var(--primary-color-1);
@@ -225,4 +244,56 @@ a:hover {
 
 .dropdown-item.selected {
   background-color: var(--primary-color-2);
+}
+
+.displayParams {
+  opacity: 1;
+  z-index: 10000;
+}
+
+.displayParams label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.displayParams form {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.displayParams input {
+  padding: 2px;
+  border: 3px solid var(--primary-color-1);
+}
+
+#nbPerPageBtn {
+  background-color: var(--primary-color-1) !important;
+  color: white;
+}
+
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::before {
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.ripple:focus::before {
+  transition: all 0.8s ease-out;
+  opacity: 0;
+  width: 160px;
+  height: 160px;
+  margin-top: -80px;
+  margin-left: -80px;
 }
