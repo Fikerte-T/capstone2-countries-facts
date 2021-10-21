@@ -5,6 +5,9 @@ import { mf } from './missingFlags.js';
 
 let allCountriesArr = [];
 let filteredCountriesArr = [];
+let searchInput = document.querySelector('#searchCountriesInput');
+let allCountriesNb = 0;
+const searchFeedback = document.querySelector('.searchFeedback');
 
 const codeForSingleCountry = (country) => {
   let flagUrl = country.flag;
@@ -155,12 +158,35 @@ const displayArrayOfCountries = (arr, shouldHandlePagination = false, sortCrit =
   }
 };
 
+const handleSearch = () => {
+searchInput.addEventListener('input', (e) => {
+    const str = searchInput.value;
+    if(str.length > 0)
+    {
+        filteredCountriesArr = allCountriesArr.filter((ctr) => ctr.name.toLowerCase().includes(str.toLowerCase()));
+    }
+    else {
+        filteredCountriesArr = allCountriesArr;
+    }
+    if(filteredCountriesArr.length > 0) {
+        const text = filteredCountriesArr.length == 1 ? 'country': 'countries';
+        searchFeedback.innerHTML = `<p style="font-size: 22px; padding:7px; border-radius: 10px; background-color: #72fcb2; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">✅</span> Displaying <b>${filteredCountriesArr.length}</b> ${text}.<p>`;
+    }
+    else {
+        searchFeedback.innerHTML = `<p style="font-size: 22px; padding:10px; border-radius: 10px; background-color: #fc7290; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">🥺</span>No result. Nothing to display.</p>`;
+    }
+    displayArrayOfCountries(filteredCountriesArr, true);
+})
+};
+
 (async () => {
   const countriesData = await getStuff(countriesAndFlagsURL);
   if (countriesData.data) {
     allCountriesArr = countriesData.data;
-    document.querySelector('#allCountriesLink').textContent = `All countries (${allCountriesArr.length})`;
+    allCountriesNb = allCountriesArr.length;
+    document.querySelector('#allCountriesLink').textContent = `All countries (${allCountriesNb})`;
     filteredCountriesArr = countriesData.data;
     displayArrayOfCountries(allCountriesArr, true);
+    handleSearch();
   }
 })();

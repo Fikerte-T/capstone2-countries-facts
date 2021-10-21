@@ -204,3 +204,7 @@ a:hover {
 .nextBtn.disabled, .previousBtn.nextBtn.disabled {
   cursor: not-allowed;
 }
+
+.searchFeedback {
+  text-align: center;
+}
