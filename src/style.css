@@ -195,3 +195,12 @@ a:hover {
   color: white !important;
   transform: scale(1.02);
 }
+
+.nextBtn,
+.previousBtn {
+  cursor: pointer;
+}
+
+.nextBtn.disabled, .previousBtn.nextBtn.disabled {
+  cursor: not-allowed;
+}

@@ -23,13 +23,16 @@
          <div class="collapse navbar-collapse" id="main_nav">
            <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link onit" href="#" id="listLink">All countries</a>
+                <a class="nav-link onit" href="#" id="allCountriesLink">All countries</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link nav-separator" href="#">|</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="addLink">Search</a>
+            <li class="nav-item d-flex">
+                <div class="input-group">
+                    <span class="input-group-text" id="search-icon"><i class="fas fa-search"></i></span>
+                    <input id="searchCountriesInput" class="form-control" type="search" placeholder="Search countries" aria-label="Search" aria-describedby="search-icon">
+                </div>
             </li>
            </ul>
          </div> 

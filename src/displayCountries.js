@@ -8,8 +8,7 @@ let filteredCountriesArr = [];
 
 const codeForSingleCountry = (country) => {
   let flagUrl = country.flag;
-  if(flagUrl === undefined)
-  {
+  if (flagUrl === undefined) {
     flagUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/338px-No_flag.svg.png';
   }
   if (mf[country.name]) flagUrl = mf[country.name];
@@ -59,41 +58,57 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
       } else {
         document.querySelector('.previousBtn').classList.remove('disabled');
         if (nb === arrOfNbs[arrOfNbs.length - 1]) {
-        document.querySelector('.nextBtn').classList.add('disabled');
+          document.querySelector('.nextBtn').classList.add('disabled');
         } else {
-         document.querySelector('.nextBtn').classList.remove('disabled');
+          document.querySelector('.nextBtn').classList.remove('disabled');
         }
       }
       if (previousNb !== nb) {
         console.log(e.target);
         allNbItems.forEach((nbii) => {
-            nbii.parentElement.classList.remove('activeItem');
+          nbii.parentElement.classList.remove('activeItem');
         });
         e.target.parentElement.classList.add('activeItem');
         e.target.classList.add('activeItem');
         const from = (nb - 1) * nbPp;
         // eslint-disable-next-line no-use-before-define
-        displayArrayOfCountries(filteredCountriesArr,  false, 'a-z', from, nbPp);
+        displayArrayOfCountries(filteredCountriesArr, false, 'a-z', from, nbPp);
       }
     });
   }
 
   // Previous and next buttons
-  document.querySelector('.nextBtn').addEventListener('click', (e) => {
-    if(!e.target.classList.contains('disabled')){
-        let activePage = Number(document.querySelector('.page-item.activeItem').getAttribute('data-number'));
-        let lastPage = Number(allNbItems[allNbItems.length - 1].getAttribute('data-number'));
-        if(activePage != lastPage)
-        {
-            allNbItems[activePage-1].parentElement.classList.remove('activeItem');
-            allNbItems[activePage].parentElement.classList.add('activeItem');
-            const from = activePage * nbPp;
-                // eslint-disable-next-line no-use-before-define
-            displayArrayOfCountries(filteredCountriesArr,  false, 'a-z', from, nbPp);
-            if(activePage === (lastPage - 1)) {
-                document.querySelector('.nextBtn').classList.add('disabled');
-            }
+  document.querySelector('.previousBtn').addEventListener('click', (e) => {
+    if (!e.target.classList.contains('disabled')) {
+      const activePage = Number(document.querySelector('.page-item.activeItem').getAttribute('data-number'));
+      if (activePage !== 1) {
+        document.querySelector('.nextBtn').classList.remove('disabled');
+        allNbItems[activePage - 1].parentElement.classList.remove('activeItem');
+        allNbItems[activePage - 2].parentElement.classList.add('activeItem');
+        const from = (activePage - 2) * nbPp;
+        // eslint-disable-next-line no-use-before-define
+        displayArrayOfCountries(filteredCountriesArr, false, 'a-z', from, nbPp);
+        if ((activePage - 1) === 1) {
+          document.querySelector('.previousBtn').classList.add('disabled');
         }
+      }
+    }
+  });
+  document.querySelector('.nextBtn').addEventListener('click', (e) => {
+    if (!e.target.classList.contains('disabled')) {
+      const activePage = Number(document.querySelector('.page-item.activeItem').getAttribute('data-number'));
+      const lastPage = Number(allNbItems[allNbItems.length - 1].getAttribute('data-number'));
+      if (activePage != lastPage) {
+        document.querySelector('.previousBtn').classList.remove('disabled');
+        allNbItems[activePage - 1].parentElement.classList.remove('activeItem');
+        allNbItems[activePage].parentElement.classList.add('activeItem');
+        const from = activePage * nbPp;
+        // eslint-disable-next-line no-use-before-define
+        displayArrayOfCountries(filteredCountriesArr, false, 'a-z', from, nbPp);
+        if (activePage === (lastPage - 1)) {
+          document.querySelector('.nextBtn').classList.add('disabled');
+        }
+      }
     }
   });
 };
@@ -104,7 +119,7 @@ const handlePagination = (nbElts, nbPerPage) => {
   const arrOfNbs = [...Array(totalPages + 1).keys()].slice(1);
 
   const paginationCode = `<nav aria-label="Pagination of the countries container">
-    <ul class="pagination pagination-lg justify-content-center mb-5">
+    <ul class="pagination justify-content-center mb-5">
       <li class="page-item previousBtn disabled">
         <span class="page-link">&laquo;</span>
       </li>
@@ -123,7 +138,7 @@ const handlePagination = (nbElts, nbPerPage) => {
   }, 500);
 };
 
-const displayArrayOfCountries = (arr, shouldHandlePagination=false, sortCrit = 'a-z', from = 0, limit = 24) => {
+const displayArrayOfCountries = (arr, shouldHandlePagination = false, sortCrit = 'a-z', from = 0, limit = 24) => {
   const arrToDisplay = arr.sort((a, b) => {
     if (a.name < b.name) return -1;
     return 1;
@@ -135,7 +150,7 @@ const displayArrayOfCountries = (arr, shouldHandlePagination=false, sortCrit = '
   // eslint-disable-next-line no-undef
   $('#countriesGrid').html(htmlCode);
   addClicksListener();
-  if(shouldHandlePagination) {
+  if (shouldHandlePagination) {
     handlePagination(arr.length, limit);
   }
 };
@@ -144,6 +159,7 @@ const displayArrayOfCountries = (arr, shouldHandlePagination=false, sortCrit = '
   const countriesData = await getStuff(countriesAndFlagsURL);
   if (countriesData.data) {
     allCountriesArr = countriesData.data;
+    document.querySelector('#allCountriesLink').textContent = `All countries (${allCountriesArr.length})`;
     filteredCountriesArr = countriesData.data;
     displayArrayOfCountries(allCountriesArr, true);
   }
