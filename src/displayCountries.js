@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-loop-func */
 import { getStuff, countriesAndFlagsURL } from './api-stuff.js';
 import { mf } from './missingFlags.js';
 
@@ -6,6 +8,10 @@ let filteredCountriesArr = [];
 
 const codeForSingleCountry = (country) => {
   let flagUrl = country.flag;
+  if(flagUrl === undefined)
+  {
+    flagUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/338px-No_flag.svg.png';
+  }
   if (mf[country.name]) flagUrl = mf[country.name];
 
   return `<div class="card country">
@@ -32,18 +38,53 @@ const addClicksListener = () => {
 };
 
 const paginationNumberCode = (nb) => {
-    if(nb === 1) return `<li class="page-item activeItem" data-number="1">
+  if (nb === 1) {
+    return `<li class="page-item activeItem" data-number="1">
                             <span class="page-link numbered" data-number="1">1</span>
                          </li>`;
-     return `<li class="page-item" data-number="${nb}"><a class="page-link numbered" data-number="${nb}" href="#">${nb}</a></li>`;
-}
+  }
+  return `<li class="page-item" data-number="${nb}"><a class="page-link numbered" data-number="${nb}" href="#">${nb}</a></li>`;
+};
+
+const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
+  const allNbItems = [...document.querySelectorAll('.numbered')];
+  for (let i = 0; i < allNbItems.length; i += 1) {
+    const nbi = allNbItems[i];
+    nbi.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const previousNb = Number(document.querySelector('.page-item.activeItem').getAttribute('data-number'));
+      const nb = Number(e.target.getAttribute('data-number'));
+      if (nb === 1) {
+        document.querySelector('.previousBtn').classList.add('disabled');
+      } else {
+        document.querySelector('.previousBtn').classList.remove('disabled');
+        if (nb === arrOfNbs[arrOfNbs.length - 1]) {
+        document.querySelector('.nextBtn').classList.add('disabled');
+        } else {
+         document.querySelector('.nextBtn').classList.remove('disabled');
+        }
+      }
+      if (previousNb !== nb) {
+        console.log(e.target);
+        allNbItems.forEach((nbii) => {
+            nbii.parentElement.classList.remove('activeItem');
+        });
+        e.target.parentElement.classList.add('activeItem');
+        e.target.classList.add('activeItem');
+        const from = (nb - 1) * nbPp;
+        // eslint-disable-next-line no-use-before-define
+        displayArrayOfCountries(filteredCountriesArr,  false, 'a-z', from, nbPp);
+      }
+    });
+  }
+};
 
 const handlePagination = (nbElts, nbPerPage) => {
-    let ctn = document.querySelector('.paginationContainer');
-    let totalPages = Math.ceil(nbElts / nbPerPage);
-    let arrOfNbs = [...Array(totalPages + 1).keys()].slice(1);
+  const ctn = document.querySelector('.paginationContainer');
+  const totalPages = Math.ceil(nbElts / nbPerPage);
+  const arrOfNbs = [...Array(totalPages + 1).keys()].slice(1);
 
-    let paginationCode = `<nav aria-label="Pagination of the countries container">
+  const paginationCode = `<nav aria-label="Pagination of the countries container">
     <ul class="pagination pagination-lg justify-content-center mb-5">
       <li class="page-item previousBtn disabled">
         <span class="page-link">&laquo;</span>
@@ -58,38 +99,12 @@ const handlePagination = (nbElts, nbPerPage) => {
   ctn.innerHTML = paginationCode;
 
   // Click event on page number
-  let allNbItems = [...document.querySelectorAll('.numbered')];
-
-  allNbItems.forEach((nbi) => {
-      nbi.addEventListener('click', (e) => {
-        let previousNb = Number(document.querySelector('.page-item.activeItem').getAttribute('data-number'));
-        console.log(previousNb);
-        const nb = Number(e.target.getAttribute('data-number'));
-        console.log(nb);
-        if(nb === 1) {
-            document.querySelector('.previousBtn').classList.add('disabled');
-        }
-        else {
-            document.querySelector('.previousBtn').classList.remove('disabled');
-            if(nb === arrOfNbs[arrOfNbs.length - 1])
-            {
-                document.querySelector('.nextBtn').classList.add('disabled');
-            }
-            else {
-                document.querySelector('.nextBtn').classList.remove('disabled');
-            }
-        }
-        if(previousNb !== nb) {
-            [...document.querySelectorAll('.numbered')][nb - 1].parentElement.classList.add('activeItem');
-            const from = (nb - 1) * nbPerPage;
-            // eslint-disable-next-line no-use-before-define
-            displayArrayOfCountries(filteredCountriesArr, 'a-z', from, nbPerPage);
-        }
-      });
-  })
+  setTimeout(() => {
+    handleClickOnPaginationElts(arrOfNbs, nbPerPage);
+  }, 500);
 };
 
-const displayArrayOfCountries = (arr, sortCrit = 'a-z', from = 0, limit = 25) => {
+const displayArrayOfCountries = (arr, shouldHandlePagination=false, sortCrit = 'a-z', from = 0, limit = 24) => {
   const arrToDisplay = arr.sort((a, b) => {
     if (a.name < b.name) return -1;
     return 1;
@@ -101,15 +116,16 @@ const displayArrayOfCountries = (arr, sortCrit = 'a-z', from = 0, limit = 25) =>
   // eslint-disable-next-line no-undef
   $('#countriesGrid').html(htmlCode);
   addClicksListener();
-  handlePagination(arr.length, 25);
+  if(shouldHandlePagination) {
+    handlePagination(arr.length, limit);
+  }
 };
-
 
 (async () => {
   const countriesData = await getStuff(countriesAndFlagsURL);
   if (countriesData.data) {
     allCountriesArr = countriesData.data;
     filteredCountriesArr = countriesData.data;
-    displayArrayOfCountries(allCountriesArr);
+    displayArrayOfCountries(allCountriesArr, true);
   }
 })();

@@ -73,6 +73,7 @@ main {
   background-image: url("https://images.unsplash.com/photo-1600633349333-eebb43d01e23?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1");
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
   position: relative;
 }
 
@@ -192,5 +193,5 @@ a:hover {
 .page-item.activeItem .page-link {
   background-color: var(--primary-color-1) !important;
   color: white !important;
-  transform: scale(1.1);
+  transform: scale(1.02);
 }

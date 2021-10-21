@@ -6,7 +6,6 @@ const mf = {
   Bolivia: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Flag_of_Bolivia.svg/1200px-Flag_of_Bolivia.svg.png',
   'Bonaire, Saint Eustatius and Saba': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Flag_of_Bonaire.svg/900px-Flag_of_Bonaire.svg.png',
 
-
 };
 
 // eslint-disable-next-line import/prefer-default-export
