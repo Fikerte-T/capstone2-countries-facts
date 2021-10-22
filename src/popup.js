@@ -15,6 +15,7 @@ const flagUrl = `${countriesAPIBaseURL}flag/images`;
 
 const getDialcode = async (countryname) => {
   if (countryname === 'Tanzania') return '+255';
+  if (countryname === 'Venezuela') return '+58';
   const response = await postStuff(dialcodeUrl, {
     country: countryname,
   });
@@ -53,8 +54,12 @@ const getPopulation = async (countryname) => {
   const response = await postStuff(populationUrl, {
     country: countryname,
   });
-  const population = response.data.populationCounts;
-
+  let population;
+  try {
+    population = response.data.populationCounts;
+  } catch (err) {
+    population = [{ value: 'N/A', year: 2018 }];
+  }
   return population;
 };
 const getCapital = async (countryname) => {
@@ -83,7 +88,7 @@ const countryInfo = async (countryname) => {
       <div class="d-inline-flex justify-content-between">
           <div class ="m-3">
               <p><b>Capital:</b> ${capital}</p>
-              <p><b>Population:</b> ${numberWithCommas(latestPopulation.value)} in ${latestPopulation.year}</p>
+              <p><b>Population:</b> ${numberWithCommas(latestPopulation.value)} (${latestPopulation.year})</p>
           </div >
           <div class ="m-3">
               <p><b>Currency:</b> ${currency}</p>
