@@ -41,7 +41,7 @@ As a user:
 
 ## Live Demo
 
-Here is the link to the live version of this project: [See it live](https://fikerte-t.github.io/capstone2-kanban/)
+Here is the link to the live version of this project: [See it live](https://fikerte-t.github.io/capstone2-countries-facts/)
 
 
 ## Getting Started
