@@ -311,3 +311,7 @@ a:hover {
 .comments div {
   gap: 10px;
 }
+
+#countriesDetailsModal {
+  z-index: 30000;
+}

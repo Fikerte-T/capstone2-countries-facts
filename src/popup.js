@@ -4,9 +4,6 @@ import {
 
 const userName = document.querySelector('.username');
 const comment = document.querySelector('.comment');
-const form = document.forms['comment-form'];
-const displayInfo = document.querySelector('.country-info');
-const comments = document.querySelector('.comments');
 const commentBtn = document.querySelector('.comment-btn');
 const capitalUrl = `${countriesAPIBaseURL}capital`;
 const populationUrl = `${countriesAPIBaseURL}population/cities`;
@@ -61,18 +58,18 @@ const getCapital = async (countryname) => {
 };
 
 const countryInfo = async (countryname) => {
+  const displayInfo = document.querySelector('.country-info');
   const flag = await getFlag(countryname);
   const capital = await getCapital(countryname);
   const currency = await getCurrency(countryname);
   const dialcode = await getDialcode(countryname);
-  const population = await getPopulation(capital);
+  // const population = await getPopulation(capital);
   displayInfo.innerHTML = `
       <img class="img-fluid rounded mx-auto d-block" src="${flag}" alt="country flag">
       <h3>${countryname}</h3>
       <div class="d-inline-flex justify-content-between">
           <div class ="m-3">
               <p>Capital: ${capital}</p>
-              <p>Population: ${population[0].value} in year ${population[0].year}</p>
           </div >
           <div class ="m-3">
               <p>Currency: ${currency}</p>
@@ -91,13 +88,16 @@ const createNewComment = async (countryname, username, comment) => {
 };
 
 const getComments = async (countryname) => {
-  const response = await getStuff(`${involvementCommentsEndPoint}?item_id=${countryname}`);
+  const url = `${involvementCommentsEndPoint}?item_id=${encodeURIComponent(countryname)}`;
+  console.log(url);
+  const response = await getStuff(url);
+  if (response.error) return [];
   return response;
 };
 
-const displayComment = async (countryname = 'Bangladesh') => {
+const displayComment = async (countryname) => {
+  const comments = document.querySelector('.comments');
   const commentsData = await getComments(countryname);
-
   commentsData.forEach((comment) => {
     comments.innerHTML += `
           <div class="d-inline-flex">
@@ -109,14 +109,24 @@ const displayComment = async (countryname = 'Bangladesh') => {
   });
 };
 
-form.addEventListener('submit', async (e, countryname = 'Bangladesh') => {
-  e.preventDefault();
-  await createNewComment(countryname, form.username.value, form.comment.value);
-  form.username.value = '';
-  form.comment.value = '';
-  await displayComment();
-});
+const handleCommentFormSubmission = (countryname) => {
+  const form = document.forms['comment-form'];
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await createNewComment(countryname, form.username.value, form.comment.value);
+    form.username.value = '';
+    form.comment.value = '';
+    await displayComment();
+  });
+};
 
 export {
-  countryInfo, getComments, createNewComment, commentBtn, userName, comment, displayComment,
+  countryInfo,
+  getComments,
+  createNewComment,
+  commentBtn,
+  userName,
+  comment,
+  displayComment,
+  handleCommentFormSubmission,
 };

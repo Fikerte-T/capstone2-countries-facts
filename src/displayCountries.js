@@ -3,7 +3,7 @@
 import { getStuff, countriesAndFlagsURL } from './api-stuff.js';
 import { mf } from './missingFlags.js';
 import { handleLikeFeature, allLikedCountriesArr, getAllLikedCountries } from './likesRelated.js';
-import { countryInfo, displayComment } from './popup.js';
+import { countryInfo, displayComment, handleCommentFormSubmission } from './popup.js';
 
 let allCountriesArr = [];
 let filteredCountriesArr = [];
@@ -45,10 +45,11 @@ const codeForSingleCountry = (country) => {
 const addCommentClicksListener = () => {
   const buttonsArr = [...document.querySelectorAll('.commentBtn button')];
   buttonsArr.forEach((btn) => {
-    btn.addEventListener('click', async () => {
+    btn.addEventListener('click', async (e) => {
       const country = e.target.getAttribute('data-country');
       await countryInfo(country);
       await displayComment(country);
+      handleCommentFormSubmission(country);
     });
   });
 };
