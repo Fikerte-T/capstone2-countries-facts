@@ -44,8 +44,8 @@ const codeForSingleCountry = (country) => {
 const addClicksListener = () => {
   const buttonsArr = [...document.querySelectorAll('.commentBtn button')];
   buttonsArr.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      const country = e.target.getAttribute('data-country');
+    btn.addEventListener('click', () => {
+    //   const country = e.target.getAttribute('data-country');
     });
   });
 };
