@@ -1,8 +1,7 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
 
-# API Project (Capstone 2)
-
+# API Project: CountriesFacts (Capstone 2)
 
 ## Introduction
 
@@ -26,10 +25,19 @@ We had to combine all the knowledge we gained in the Javascript module in order 
 
 ### More about the project
 
-We chose to build our project around [the XYZ api](https://github.com/Kingjosh007)... 
-The app consists in two pages described as follows: 
-...
+We chose to build our project around [a countries API](https://documenter.getpostman.com/view/1134062/T1LJjU52#intro)...
+It's a single page app called **CountriesFacts** as it allows users to comment facts about countries.
 
+As a user:
+
+- I can see all the countries provided by the API when the app loads. I can see the flags, and number of likes of every country;
+- I can click a like button for each country;
+- Inside a popup, I can view all the comments posted by different users that pertain to a single country;
+- I can post new comments for the country displayed in the popup;
+- **[BONUS]** I can filter all the countries thanks to the input provided;
+- **[BONUS]** I can sort all the countries based on the name or the number of likes;
+- **[BONUS]** I can have the countries displayed with a pagination system for a easier navigation;
+- **[BONUS]** I can set the number of countries I want to see at most per page;
 
 
 ## Live Demo
@@ -54,9 +62,8 @@ To get a local copy of this project running, do the following:
 
 To perform the tests do the following:
 
-1. AAAAA
-2. BBBB
-3. CCCC
+1. Follow steps 1-5 of the getting started section;
+2. Type `npm test` to run the test suites;
 
 ## Screenshots
 
@@ -71,7 +78,9 @@ To perform the tests do the following:
 
 ## Built With
 
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) &nbsp; &nbsp;  ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) &nbsp; &nbsp; ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)  &nbsp; &nbsp; ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white) &nbsp; &nbsp; ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black) &nbsp; &nbsp; ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) &nbsp; &nbsp;  ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) &nbsp; &nbsp; ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)  &nbsp; &nbsp;  
+
+![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white) &nbsp; &nbsp; ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black) &nbsp; &nbsp; ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
 
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white) &nbsp; &nbsp; ![GitHub Actions](https://img.shields.io/badge/githubactions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white) &nbsp; &nbsp; ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white) &nbsp; &nbsp; ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white) 
 
