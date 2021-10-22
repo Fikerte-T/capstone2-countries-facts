@@ -16,12 +16,17 @@ const flagUrl = `${countriesAPIBaseURL}flag/images`;
 const getDialcode = async (countryname) => {
   if (countryname === 'Tanzania') return '+255';
   if (countryname === 'Venezuela') return '+58';
-  const response = await postStuff(dialcodeUrl, {
-    country: countryname,
-  });
-  const dialcode = response.data.dial_code;
 
-  return dialcode;
+  try {
+    const response = await postStuff(dialcodeUrl, {
+      country: countryname,
+    });
+    const dialcode = response.data.dial_code;
+
+    return dialcode;
+  } catch (err) {
+    return 'N/A';
+  }
 };
 
 const getCurrency = async (countryname) => {
@@ -125,16 +130,6 @@ const displayComment = async (countryname) => {
           </div>`).join('');
 };
 
-const handleCommentFormSubmission = (countryname) => {
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    await createNewComment(countryname, form.username.value, form.comment.value);
-    form.username.value = '';
-    form.comment.value = '';
-    await displayComment(countryname);
-  });
-};
-
 export {
   countryInfo,
   getComments,
@@ -142,6 +137,6 @@ export {
   commentBtn,
   userName,
   comment,
+  form,
   displayComment,
-  handleCommentFormSubmission,
 };

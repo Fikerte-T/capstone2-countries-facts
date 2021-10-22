@@ -3,7 +3,9 @@
 import { getStuff, countriesAndFlagsURL } from './api-stuff.js';
 import { mf } from './missingFlags.js';
 import { handleLikeFeature, allLikedCountriesArr, getAllLikedCountries } from './likesRelated.js';
-import { countryInfo, displayComment, handleCommentFormSubmission } from './popup.js';
+import {
+  countryInfo, displayComment, form, createNewComment,
+} from './popup.js';
 
 let allCountriesArr = [];
 let filteredCountriesArr = [];
@@ -47,9 +49,9 @@ const addCommentClicksListener = () => {
   buttonsArr.forEach((btn) => {
     btn.addEventListener('click', async (e) => {
       const country = e.target.getAttribute('data-country');
+      form.setAttribute('data-country', country);
       await countryInfo(country);
       await displayComment(country);
-      handleCommentFormSubmission(country);
     });
   });
 };
@@ -280,5 +282,13 @@ const handleDisplayAll = () => {
     handleSearch();
     handleSort();
     handleNbChange();
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const countryname = form.getAttribute('data-country');
+      await createNewComment(countryname, form.username.value, form.comment.value);
+      form.username.value = '';
+      form.comment.value = '';
+      await displayComment(countryname);
+    });
   }
 })();
