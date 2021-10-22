@@ -3,6 +3,7 @@ import {
 } from './api-stuff.js';
 import { mf } from './missingFlags.js';
 
+const badge = document.querySelector('.badge');
 const userName = document.querySelector('.username');
 const form = document.forms['comment-form'];
 const comment = document.querySelector('.comment');
@@ -111,13 +112,14 @@ const displayComment = async (countryname) => {
   const comments = document.querySelector('.comments');
   comments.innerHTML = '';
   const commentsData = await getComments(countryname);
-  document.querySelector('#commentsTitle').textContent = `Comments (${commentsData.length})`;
+  // document.querySelector('#commentsTitle').textContent = `Comments (${commentsData.length})`;
+  badge.innerHTML = commentsData.length;
   commentsData.forEach((comment) => {
     comments.innerHTML += `
           <div class="d-inline-flex">
-              <p class="me-3">${comment.creation_date}</p>
-              <p class="me-2">${comment.username}: </p>
-              <p>${comment.comment}</p>
+              <p class="creation-date fst-italic">${comment.creation_date}</p>
+              <p class="comment-username fw-bold">${comment.username}: </p>
+              <p class="user-comment text-start">${comment.comment}</p>
           </div>
           `;
   });
@@ -125,13 +127,30 @@ const displayComment = async (countryname) => {
 
 const handleCommentFormSubmission = (countryname) => {
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    await createNewComment(countryname, form.username.value, form.comment.value);
-    form.username.value = '';
-    form.comment.value = '';
-    await displayComment(countryname);
+    formValidation(e);
+    
+        e.preventDefault(e);
+        if(form.username.value && form.comment.value){
+          await createNewComment(countryname, form.username.value, form.comment.value);
+          form.username.value = '';
+          form.comment.value = '';
+          await displayComment(countryname);
+        }
   });
+
+        form.classList.remove('was-validated');
+  
 };
+
+const formValidation = (event) => {
+  if (!form.checkValidity()) {
+      event.preventDefault()
+      event.stopPropagation()
+      
+  }
+      form.classList.add('was-validated');
+
+}
 
 export {
   countryInfo,

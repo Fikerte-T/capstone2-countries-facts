@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="modal" id="countriesDetailsModal">
-            <div class="modal-dialog modal-dialog modal-dialog-scrollable">
+            <div class="modal-dialog modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
         
                 <!-- Modal Header -->
@@ -91,24 +91,30 @@
 
                     </div>
                     <div>
-                        <h5 id="commentsTitle">Comments</h5>
-                        <div class="comments">
+                        <h5 id="commentsTitle">Comments<span class="badge rounded-pill bg-primary"></span></h5>
+                        <div class="comments m-0">
                     
                         </div>
                     </div>
                     <div class="comment-form">
-                        <form name="comment-form">
+                        <form name="comment-form" class="needs-validation" novalidate>
                             <h5>Add a comment</h5>
-                            <input name="username" type="text" class="username form-control mb-3" placeholder="Name" required>
-                            <textarea name="comment" class="comment form-control mb-3" placeholder="Fact about this country"></textarea>
-                            <button type="submit" class="comment-btn btn btn-primary mb-3 w-100">Comment</button>
+                            <input name="username" type="text" class="username form-control mt-3" placeholder="Name" required>
+                                <div class="invalid-feedback m-0 text-start">
+                                    Please write your name.
+                                </div>
+                            <textarea name="comment" class="comment form-control mt-3" placeholder="Fact about this country" required></textarea>
+                                <div class="invalid-feedback m-0 text-start">
+                                    Please write your comment.
+                                </div>
+                            <button type="submit" class="comment-btn btn btn-primary mt-3 w-100">Comment</button>
                         </form>
                     </div>
                 </div>
             </div>
             </div>
         </div>
-       
+       Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo est dicta perferendis! Ratione maiores ex ipsam ipsa quod cupiditate, sapiente quam. Vero deserunt earum similique dignissimos blanditiis autem aliquid commodi?25
     </main>
     <footer class="fixed-bottom" id="myFooter">
         <div>Made with <span class="heart"><i class="fas fa-heart"></i></span> by <a
