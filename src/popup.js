@@ -14,6 +14,7 @@ const currencyUrl = `${countriesAPIBaseURL}currency`;
 const flagUrl = `${countriesAPIBaseURL}flag/images`;
 
 const getDialcode = async (countryname) => {
+  if (countryname === 'Tanzania') return '+255';
   const response = await postStuff(dialcodeUrl, {
     country: countryname,
   });
