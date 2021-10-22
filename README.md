@@ -6,7 +6,9 @@
 
 ### About the requirements
 
-> This is the repo for the second capstone project in our Microverse journey. It is a group project created by [Kingjosh007](https://github.com/Kingjosh007) and [Fikerte-T](https://github.com/Fikerte-T). 
+> This is the repo for the second capstone project in our Microverse journey. It is a group project created by [Kingjosh007](https://github.com/Kingjosh007) and [Fikerte-T](https://github.com/Fikerte-T).
+
+A video of us presenting our project is available [here](https://www.loom.com/share/de669d7acec044758d2f6bb571164b5c)
 
 We had to combine all the knowledge we gained in the Javascript module in order to build this project in 3-4 days. The project had be API-based and some of the requirements we had to meet included: 
 
