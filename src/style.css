@@ -319,7 +319,7 @@ a:hover {
 .comment-username {
   color: var(--primary-color-2);
   max-width: 70px;
-  overflow-wrap: break-word; 
+  overflow-wrap: break-word;
   text-align: left;
   flex: 1;
 }
@@ -328,6 +328,7 @@ a:hover {
   /* width: 100px; */
   font-size: 12px;
   padding-top: 3px;
+
   /* flex: 1; */
 }
 

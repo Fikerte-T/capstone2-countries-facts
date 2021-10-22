@@ -108,12 +108,17 @@ const getComments = async (countryname) => {
   return response;
 };
 
+const commentCounter = (commentsArr) => {
+  const count = commentsArr.length;
+  return count;
+};
+
 const displayComment = async (countryname) => {
   const comments = document.querySelector('.comments');
   comments.innerHTML = '';
   const commentsData = await getComments(countryname);
   // document.querySelector('#commentsTitle').textContent = `Comments (${commentsData.length})`;
-  badge.innerHTML = commentsData.length;
+  badge.innerHTML = commentCounter(commentsData);
   commentsData.forEach((comment) => {
     comments.innerHTML += `
           <div class="d-inline-flex">
@@ -125,32 +130,29 @@ const displayComment = async (countryname) => {
   });
 };
 
+const formValidation = (event) => {
+  if (!form.checkValidity()) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  form.classList.add('was-validated');
+};
+
 const handleCommentFormSubmission = (countryname) => {
   form.addEventListener('submit', async (e) => {
     formValidation(e);
-    
-        e.preventDefault(e);
-        if(form.username.value && form.comment.value){
-          await createNewComment(countryname, form.username.value, form.comment.value);
-          form.username.value = '';
-          form.comment.value = '';
-          await displayComment(countryname);
-        }
+
+    e.preventDefault(e);
+    if (form.username.value && form.comment.value) {
+      await createNewComment(countryname, form.username.value, form.comment.value);
+      form.username.value = '';
+      form.comment.value = '';
+      await displayComment(countryname);
+    }
   });
 
-        form.classList.remove('was-validated');
-  
+  form.classList.remove('was-validated');
 };
-
-const formValidation = (event) => {
-  if (!form.checkValidity()) {
-      event.preventDefault()
-      event.stopPropagation()
-      
-  }
-      form.classList.add('was-validated');
-
-}
 
 export {
   countryInfo,
