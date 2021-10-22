@@ -1,5 +1,5 @@
 {
-  "name": "capstone2-kanban",
+  "name": "capstone2-countries-facts",
   "version": "1.0.0",
   "description": "![](https://img.shields.io/badge/Microverse-blueviolet)",
   "private": true,
@@ -27,15 +27,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Fikerte-T/capstone2-kanban.git"
+    "url": "git+https://github.com/Fikerte-T/capstone2-countries-facts.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Fikerte-T/capstone2-kanban/issues"
+    "url": "https://github.com/Fikerte-T/capstone2-countries-facts/issues"
   },
-  "homepage": "https://github.com/Fikerte-T/capstone2-kanban#readme",
+  "homepage": "https://github.com/Fikerte-T/capstone2-countries-facts#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.15.8",
     "babel-eslint": "^10.1.0",
