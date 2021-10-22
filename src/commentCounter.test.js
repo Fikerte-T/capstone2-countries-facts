@@ -1,4 +1,4 @@
-import { commentCounter } from './utils.js';
+import { commentCounter } from './commentCounter.js';
 
 describe('Testing the comment counter function', () => {
   const arr = [1, 2, 3, 4, 5];

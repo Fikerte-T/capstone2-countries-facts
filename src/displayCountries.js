@@ -18,6 +18,12 @@ const dropdownItems = [...document.querySelectorAll('.dropdown-item')];
 let allCountriesNb = 0;
 const searchFeedback = document.querySelector('.searchFeedback');
 
+/* eslint-disable no-unused-vars */
+const itemsCounter = () => {
+  const counter = allCountriesArr.length;
+  return counter;
+};
+
 const codeForSingleCountry = (country) => {
   const ctrName = country.name;
   let flagUrl = country.flag;
@@ -25,7 +31,6 @@ const codeForSingleCountry = (country) => {
     flagUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/338px-No_flag.svg.png';
   }
   if (mf[ctrName]) flagUrl = mf[ctrName];
-
   const thisCtrLikes = allLikedCountriesArr.find((obj) => obj.item_id === ctrName) || { likes: 0 };
   const fasOrfar = thisCtrLikes.likes > 0 ? 'fas' : 'far';
   const text = thisCtrLikes.likes <= 1 ? 'like' : 'likes';
