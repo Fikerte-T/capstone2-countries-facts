@@ -1,6 +1,5 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-
 # API Project: CountriesFacts (Capstone 2)
 
 ## Introduction
