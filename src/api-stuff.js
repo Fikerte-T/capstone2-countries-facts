@@ -7,13 +7,14 @@ const involvementCommentsEndPoint = `${involvementBaseURL}apps/${appId}/comments
 const countriesAPIBaseURL = 'https://countriesnow.space/api/v0.1/countries/';
 const countriesAndFlagsURL = `${countriesAPIBaseURL}info?returns=flag`;
 
-const postStuff = async (url, data) => {
+const postStuff = async (url, data, isText = false) => {
   const res = await fetch(url, {
     method: 'POST',
     mode: 'cors',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify(data),
   });
+  if (isText) return res.text();
   return res.json();
 };
 
@@ -22,4 +23,6 @@ const getStuff = async (url) => {
   return res.json();
 };
 
-export { postStuff, countriesAndFlagsURL, getStuff };
+export {
+  postStuff, countriesAndFlagsURL, getStuff, involvementLikesEndPoint, involvementCommentsEndPoint,
+};

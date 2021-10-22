@@ -2,6 +2,7 @@
 /* eslint-disable no-loop-func */
 import { getStuff, countriesAndFlagsURL } from './api-stuff.js';
 import { mf } from './missingFlags.js';
+import { handleLikeFeature, allLikedCountriesArr, getAllLikedCountries } from './likesRelated.js';
 
 let allCountriesArr = [];
 let filteredCountriesArr = [];
@@ -15,21 +16,26 @@ let allCountriesNb = 0;
 const searchFeedback = document.querySelector('.searchFeedback');
 
 const codeForSingleCountry = (country) => {
+  const ctrName = country.name;
   let flagUrl = country.flag;
   if (flagUrl === undefined) {
     flagUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/338px-No_flag.svg.png';
   }
-  if (mf[country.name]) flagUrl = mf[country.name];
+  if (mf[ctrName]) flagUrl = mf[ctrName];
+
+  const thisCtrLikes = allLikedCountriesArr.find((obj) => obj.item_id === ctrName) || { likes: 0 };
+  const fasOrfar = thisCtrLikes.likes > 0 ? 'fas' : 'far';
+  const text = thisCtrLikes.likes <= 1 ? 'like' : 'likes';
 
   return `<div class="card country">
                <img class="card-img-top flag" src="${flagUrl}">
                 <div class="card-body">
                     <div class="nameAndLikes">
-                        <h5 class="card-title">${country.name}</h5>
-                        <h6><i class="far fa-heart"></i><span class="nbLikes" data-ctr-likes="${country.name}">0</span> likes</h6>
+                        <h5 class="card-title">${ctrName}</h5>
+                        <h6 class="ripple"><i class="${fasOrfar} fa-heart" data-country="${ctrName}"></i><span class="nbLikes" data-ctr-likes="${country.name}">${thisCtrLikes.likes}</span> ${text}</h6>
                     </div>
                     <div class="commentBtn">
-                         <button type="button" data-country="${country.name}"><i class="fas fa-comment"></i> Comments and facts </button>
+                         <button type="button" data-country="${ctrName}" class="ripple"><i class="fas fa-comment"></i> Comments and facts </button>
                     </div>
                 </div>
         </div>`;
@@ -51,6 +57,16 @@ const paginationNumberCode = (nb) => {
                          </li>`;
   }
   return `<li class="page-item" data-number="${nb}"><a class="page-link numbered" data-number="${nb}" href="#">${nb}</a></li>`;
+};
+
+const allParamsAndDisplay = (arr = filteredCountriesArr, bool = true, from = 0) => {
+  const nb = Number(nbPerPageInput.value);
+  const sortParam = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
+  // eslint-disable-next-line no-use-before-define
+  displayArrayOfCountries(arr, bool, sortParam, from, nb);
+  handleLikeFeature(() => {
+    allParamsAndDisplay(filteredCountriesArr, bool, from);
+  });
 };
 
 const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
@@ -78,9 +94,8 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
         e.target.parentElement.classList.add('activeItem');
         e.target.classList.add('activeItem');
         const from = (nb - 1) * nbPp;
-        const param = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
         // eslint-disable-next-line no-use-before-define
-        displayArrayOfCountries(filteredCountriesArr, false, param, from, nbPp);
+        allParamsAndDisplay(filteredCountriesArr, false, from);
       }
     });
   }
@@ -94,9 +109,8 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
         allNbItems[activePage - 1].parentElement.classList.remove('activeItem');
         allNbItems[activePage - 2].parentElement.classList.add('activeItem');
         const from = (activePage - 2) * nbPp;
-        const param = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
         // eslint-disable-next-line no-use-before-define
-        displayArrayOfCountries(filteredCountriesArr, false, param, from, nbPp);
+        allParamsAndDisplay(filteredCountriesArr, false, from);
         if ((activePage - 1) === 1) {
           document.querySelector('.previousBtn').classList.add('disabled');
         }
@@ -112,9 +126,8 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
         allNbItems[activePage - 1].parentElement.classList.remove('activeItem');
         allNbItems[activePage].parentElement.classList.add('activeItem');
         const from = activePage * nbPp;
-        const param = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
         // eslint-disable-next-line no-use-before-define
-        displayArrayOfCountries(filteredCountriesArr, false, param, from, nbPp);
+        allParamsAndDisplay(filteredCountriesArr, false, from);
         if (activePage === (lastPage - 1)) {
           document.querySelector('.nextBtn').classList.add('disabled');
         }
@@ -145,7 +158,7 @@ const handlePagination = (nbElts, nbPerPage) => {
   // Click event on page number
   setTimeout(() => {
     handleClickOnPaginationElts(arrOfNbs, nbPerPage);
-  }, 500);
+  }, 100);
 };
 
 const displayArrayOfCountries = (arr, shouldHandlePagination = false, sortCrit = 'a-z', from = 0, limit = 24) => {
@@ -156,10 +169,32 @@ const displayArrayOfCountries = (arr, shouldHandlePagination = false, sortCrit =
         break;
       case 'z-a': if (a.name > b.name) value = -1; else value = 1;
         break;
+      case 'mlf': if (a.name > b.name) value = 1; else value = -1;
+        break;
+      case 'llf': if (a.name > b.name) value = 1; else value = -1;
+        break;
       default: value = 1;
     }
     return value;
   });
+  if (sortCrit === 'mlf') {
+    filteredCountriesArr = filteredCountriesArr.sort((a, b) => {
+      const objA = allLikedCountriesArr.find((obj) => obj.item_id === a.name) || { likes: 0 };
+      const likesA = objA.likes;
+      const objB = allLikedCountriesArr.find((obj) => obj.item_id === b.name) || { likes: 0 };
+      const likesB = objB.likes;
+      return likesB - likesA;
+    });
+  }
+  if (sortCrit === 'llf') {
+    filteredCountriesArr = filteredCountriesArr.sort((a, b) => {
+      const objA = allLikedCountriesArr.find((obj) => obj.item_id === a.name) || { likes: 0 };
+      const likesA = objA.likes;
+      const objB = allLikedCountriesArr.find((obj) => obj.item_id === b.name) || { likes: 0 };
+      const likesB = objB.likes;
+      return likesA - likesB;
+    });
+  }
   const arrToDisplay = filteredCountriesArr.slice(from, from + limit);
 
   $('#countriesGrid').html('');
@@ -191,9 +226,7 @@ const handleSearch = () => {
     } else {
       searchFeedback.innerHTML = '<p style="font-size: 22px; padding:10px; border-radius: 10px; background-color: #fc7290; margin-inline: 20%; opacity: 0.7;"><span style="font-size: 28px; margin-right: 15px;">🥺</span>No result. Nothing to display.</p>';
     }
-    const sortParam = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
-    const nb = Number(nbPerPageInput.value);
-    displayArrayOfCountries(filteredCountriesArr, true, sortParam, 0, nb);
+    allParamsAndDisplay(filteredCountriesArr);
   });
 };
 
@@ -202,14 +235,12 @@ const handleSort = () => {
     di.addEventListener('click', (e) => {
       e.preventDefault();
       const text = di.getAttribute('data-text');
-      const sortParam = di.getAttribute('data-sort-param');
-      const nb = Number(nbPerPageInput.value);
       w.forEach((ww) => {
         ww.classList.remove('selected');
       });
       dropdownItems[i].classList.add('selected');
       sortBtn.textContent = text;
-      displayArrayOfCountries(filteredCountriesArr, true, sortParam, 0, nb);
+      allParamsAndDisplay(filteredCountriesArr);
     });
   });
 };
@@ -217,9 +248,7 @@ const handleSort = () => {
 const handleNbChange = () => {
   nbPerPageForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const nb = Number(nbPerPageInput.value);
-    const sortParam = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
-    displayArrayOfCountries(filteredCountriesArr, true, sortParam, 0, nb);
+    allParamsAndDisplay(filteredCountriesArr);
   });
 };
 
@@ -227,15 +256,14 @@ const handleDisplayAll = () => {
   allCountriesLink.addEventListener('click', (e) => {
     e.preventDefault();
     filteredCountriesArr = allCountriesArr;
-    const nb = Number(nbPerPageInput.value);
-    const sortParam = document.querySelector('.dropdown-item.selected').getAttribute('data-sort-param');
     searchInput.value = '';
     searchFeedback.innerHTML = '';
-    displayArrayOfCountries(allCountriesArr, true, sortParam, 0, nb);
+    allParamsAndDisplay(filteredCountriesArr);
   });
 };
 
 (async () => {
+  await getAllLikedCountries();
   const countriesData = await getStuff(countriesAndFlagsURL);
   if (countriesData.data) {
     allCountriesArr = countriesData.data;
@@ -244,6 +272,7 @@ const handleDisplayAll = () => {
     filteredCountriesArr = countriesData.data;
     displayArrayOfCountries(allCountriesArr, true);
     handleDisplayAll();
+    allParamsAndDisplay(filteredCountriesArr);
     handleSearch();
     handleSort();
     handleNbChange();
