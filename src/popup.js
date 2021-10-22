@@ -14,12 +14,19 @@ const currencyUrl = `${countriesAPIBaseURL}currency`;
 const flagUrl = `${countriesAPIBaseURL}flag/images`;
 
 const getDialcode = async (countryname) => {
-  const response = await postStuff(dialcodeUrl, {
-    country: countryname,
-  });
-  const dialcode = response.data.dial_code;
+  if (countryname === 'Tanzania') return '+255';
+  if (countryname === 'Venezuela') return '+58';
 
-  return dialcode;
+  try {
+    const response = await postStuff(dialcodeUrl, {
+      country: countryname,
+    });
+    const dialcode = response.data.dial_code;
+
+    return dialcode;
+  } catch (err) {
+    return 'N/A';
+  }
 };
 
 const getCurrency = async (countryname) => {
@@ -52,8 +59,12 @@ const getPopulation = async (countryname) => {
   const response = await postStuff(populationUrl, {
     country: countryname,
   });
-  const population = response.data.populationCounts;
-
+  let population;
+  try {
+    population = response.data.populationCounts;
+  } catch (err) {
+    population = [{ value: 'N/A', year: 2018 }];
+  }
   return population;
 };
 const getCapital = async (countryname) => {
@@ -82,7 +93,7 @@ const countryInfo = async (countryname) => {
       <div class="d-inline-flex justify-content-between">
           <div class ="m-3">
               <p><b>Capital:</b> ${capital}</p>
-              <p><b>Population:</b> ${numberWithCommas(latestPopulation.value)} in ${latestPopulation.year}</p>
+              <p><b>Population:</b> ${numberWithCommas(latestPopulation.value)} (${latestPopulation.year})</p>
           </div >
           <div class ="m-3">
               <p><b>Currency:</b> ${currency}</p>
@@ -109,28 +120,14 @@ const getComments = async (countryname) => {
 
 const displayComment = async (countryname) => {
   const comments = document.querySelector('.comments');
-  comments.innerHTML = '';
   const commentsData = await getComments(countryname);
+  comments.innerHTML = '';
   document.querySelector('#commentsTitle').textContent = `Comments (${commentsData.length})`;
-  commentsData.forEach((comment) => {
-    comments.innerHTML += `
-          <div class="d-inline-flex">
+  comments.innerHTML = commentsData.map((comment) => `<div class="d-inline-flex">
               <p class="me-3">${comment.creation_date}</p>
               <p class="me-2">${comment.username}: </p>
               <p>${comment.comment}</p>
-          </div>
-          `;
-  });
-};
-
-const handleCommentFormSubmission = (countryname) => {
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    await createNewComment(countryname, form.username.value, form.comment.value);
-    form.username.value = '';
-    form.comment.value = '';
-    await displayComment(countryname);
-  });
+          </div>`).join('');
 };
 
 export {
@@ -140,6 +137,6 @@ export {
   commentBtn,
   userName,
   comment,
+  form,
   displayComment,
-  handleCommentFormSubmission,
 };
