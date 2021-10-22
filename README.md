@@ -49,8 +49,8 @@ Here is the link to the live version of this project: [See it live](https://fike
 To get a local copy of this project running, do the following: 
 
 1. In your terminal, `cd` to the folder where you want to copy this project.
-2. Still in your terminal, type `git clone git@github.com:Fikerte-T/capstone2-kanban.git` 
-3. Run `cd capstone2-kanban`
+2. Still in your terminal, type `git clone git@github.com:Fikerte-T/capstone2-countries-facts.git` 
+3. Run `cd capstone2-countries-facts`
 4. Run `npm install`;
 5. If necessary, run `npm audit fix` to fix any vulnerability in the packages;
 6. Run `npm start` to launch the app;
