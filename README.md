@@ -68,12 +68,12 @@ To perform the tests do the following:
 ## Screenshots
 
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 💻 **Desktop version**
-![Screenshot (desktop)](image-available-soon)
+![Screenshot (desktop)](screenshots/screenshot-desktop.gif)
 
 
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  📱 **Mobile version**
 
-![Screenshot Final (mobile)](image-available-soon)
+![Screenshot (mobile)](screenshots/screenshot-mobile.gif)
 
 
 ## Built With
