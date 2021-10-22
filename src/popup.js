@@ -109,18 +109,14 @@ const getComments = async (countryname) => {
 
 const displayComment = async (countryname) => {
   const comments = document.querySelector('.comments');
-  comments.innerHTML = '';
   const commentsData = await getComments(countryname);
+  comments.innerHTML = '';
   document.querySelector('#commentsTitle').textContent = `Comments (${commentsData.length})`;
-  commentsData.forEach((comment) => {
-    comments.innerHTML += `
-          <div class="d-inline-flex">
+  comments.innerHTML = commentsData.map((comment) => `<div class="d-inline-flex">
               <p class="me-3">${comment.creation_date}</p>
               <p class="me-2">${comment.username}: </p>
               <p>${comment.comment}</p>
-          </div>
-          `;
-  });
+          </div>`).join('');
 };
 
 const handleCommentFormSubmission = (countryname) => {

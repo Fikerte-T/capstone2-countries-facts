@@ -4,7 +4,12 @@ import { postStuff, getStuff, involvementLikesEndPoint } from './api-stuff.js';
 let allLikedCountriesArr = [];
 
 const getAllLikedCountries = async () => {
-  const res = await getStuff(involvementLikesEndPoint);
+  let res;
+  try {
+    res = await getStuff(involvementLikesEndPoint);
+  } catch (err) {
+    res = [];
+  }
   allLikedCountriesArr = res;
 };
 
