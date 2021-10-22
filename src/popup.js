@@ -129,9 +129,9 @@ const displayComment = async (countryname) => {
   const commentsData = await getComments(countryname);
   comments.innerHTML = '';
   comments.innerHTML = commentsData.map((comment) => `<div class="d-inline-flex">
-              <p class="me-3">${comment.creation_date}</p>
-              <p class="me-2">${comment.username}: </p>
-              <p>${comment.comment}</p>
+              <p class="creation-date">${comment.creation_date}</p>
+              <p class="comment-username">${comment.username}: </p>
+              <p class="user-comment text-start">${comment.comment}</p>
           </div>`).join('');
   badge.innerHTML = commentCounter(commentsData);
 };
