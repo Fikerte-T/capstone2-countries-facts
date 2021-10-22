@@ -4,7 +4,7 @@ import { getStuff, countriesAndFlagsURL } from './api-stuff.js';
 import { mf } from './missingFlags.js';
 import { handleLikeFeature, allLikedCountriesArr, getAllLikedCountries } from './likesRelated.js';
 import {
-  countryInfo, displayComment, form, createNewComment,
+  countryInfo, displayComment, form, createNewComment, formValidation,
 } from './popup.js';
 
 let allCountriesArr = [];
@@ -283,12 +283,14 @@ const handleDisplayAll = () => {
     handleSort();
     handleNbChange();
     form.addEventListener('submit', async (e) => {
+      formValidation(e);
       e.preventDefault();
       const countryname = form.getAttribute('data-country');
       await createNewComment(countryname, form.username.value, form.comment.value);
       form.username.value = '';
       form.comment.value = '';
       await displayComment(countryname);
+      form.classList.remove('was-validated');
     });
   }
 })();

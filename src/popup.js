@@ -3,6 +3,7 @@ import {
 } from './api-stuff.js';
 import { mf } from './missingFlags.js';
 
+const badge = document.querySelector('.badge');
 const userName = document.querySelector('.username');
 const form = document.forms['comment-form'];
 const comment = document.querySelector('.comment');
@@ -118,16 +119,29 @@ const getComments = async (countryname) => {
   return response;
 };
 
+const commentCounter = (commentsArr) => {
+  const count = commentsArr.length;
+  return count;
+};
+
 const displayComment = async (countryname) => {
   const comments = document.querySelector('.comments');
   const commentsData = await getComments(countryname);
   comments.innerHTML = '';
-  document.querySelector('#commentsTitle').textContent = `Comments (${commentsData.length})`;
   comments.innerHTML = commentsData.map((comment) => `<div class="d-inline-flex">
-              <p class="me-3">${comment.creation_date}</p>
-              <p class="me-2">${comment.username}: </p>
-              <p>${comment.comment}</p>
+              <p class="creation-date">${comment.creation_date}</p>
+              <p class="comment-username">${comment.username}: </p>
+              <p class="user-comment text-start">${comment.comment}</p>
           </div>`).join('');
+  badge.innerHTML = commentCounter(commentsData);
+};
+
+const formValidation = (event) => {
+  if (!form.checkValidity()) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  form.classList.add('was-validated');
 };
 
 export {
@@ -139,4 +153,5 @@ export {
   comment,
   form,
   displayComment,
+  formValidation,
 };

@@ -315,3 +315,20 @@ a:hover {
 #countriesDetailsModal {
   z-index: 30000;
 }
+
+.comment-username {
+  color: var(--primary-color-2);
+  max-width: 70px;
+  overflow-wrap: break-word;
+  text-align: left;
+  flex: 1;
+}
+
+.creation-date {
+  font-size: 12px;
+  padding-top: 3px;
+}
+
+.user-comment {
+  flex: 2;
+}
