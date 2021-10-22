@@ -301,3 +301,13 @@ a:hover {
   margin-top: -80px;
   margin-left: -80px;
 }
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.comments div {
+  gap: 10px;
+}
