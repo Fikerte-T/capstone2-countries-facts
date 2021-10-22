@@ -19,13 +19,13 @@ We had to combine all the knowledge we gained in the Javascript module in order 
 - Using the best practices for code versioning by following Gitflow;
 - Being able to organize a group work on a Kanban board (Github Projects);
 - Performing code reviews for team members;
-- Solve git conflicts.
+- Solving git conflicts.
 - etc.
 
 
 ### More about the project
 
-We chose to build our project around [a countries API](https://documenter.getpostman.com/view/1134062/T1LJjU52#intro)...
+We chose to build our project around [a countries API](https://documenter.getpostman.com/view/1134062/T1LJjU52#intro).
 It's a single page app called **CountriesFacts** as it allows users to comment facts about countries.
 
 As a user:
@@ -68,6 +68,7 @@ To perform the tests do the following:
 ## Screenshots
 
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 💻 **Desktop version**
+
 ![Screenshot (desktop)](screenshots/screenshot-desktop.gif)
 
 
