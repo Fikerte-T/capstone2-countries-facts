@@ -3,6 +3,7 @@
 import { getStuff, countriesAndFlagsURL } from './api-stuff.js';
 import { mf } from './missingFlags.js';
 import { handleLikeFeature, allLikedCountriesArr, getAllLikedCountries } from './likesRelated.js';
+import { countryInfo, displayComment } from './popup.js';
 
 let allCountriesArr = [];
 let filteredCountriesArr = [];
@@ -35,17 +36,19 @@ const codeForSingleCountry = (country) => {
                         <h6 class="ripple"><i class="${fasOrfar} fa-heart" data-country="${ctrName}"></i><span class="nbLikes" data-ctr-likes="${country.name}">${thisCtrLikes.likes}</span> ${text}</h6>
                     </div>
                     <div class="commentBtn">
-                         <button type="button" data-country="${ctrName}" class="ripple"><i class="fas fa-comment"></i> Comments and facts </button>
+                         <button type="button" data-country="${ctrName}" class="ripple" data-bs-toggle="modal" data-bs-target="#countriesDetailsModal"><i class="fas fa-comment"></i> Comments and facts </button>
                     </div>
                 </div>
         </div>`;
 };
 
-const addClicksListener = () => {
+const addCommentClicksListener = () => {
   const buttonsArr = [...document.querySelectorAll('.commentBtn button')];
   buttonsArr.forEach((btn) => {
-    btn.addEventListener('click', () => {
-    //   const country = e.target.getAttribute('data-country');
+    btn.addEventListener('click', async () => {
+      const country = e.target.getAttribute('data-country');
+      await countryInfo(country);
+      await displayComment(country);
     });
   });
 };
@@ -201,7 +204,7 @@ const displayArrayOfCountries = (arr, shouldHandlePagination = false, sortCrit =
   const htmlCode = arrToDisplay.map((el) => codeForSingleCountry(el)).join('');
   // eslint-disable-next-line no-undef
   $('#countriesGrid').html(htmlCode);
-  addClicksListener();
+  addCommentClicksListener();
   if (shouldHandlePagination) {
     handlePagination(arr.length, limit);
   }

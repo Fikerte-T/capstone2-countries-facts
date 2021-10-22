@@ -81,7 +81,6 @@ const countryInfo = async (countryname) => {
       </div>
       `;
 };
-//  create new comment and display comments
 
 const createNewComment = async (countryname, username, comment) => {
   await postStuff(involvementCommentsEndPoint, {
@@ -117,8 +116,7 @@ form.addEventListener('submit', async (e, countryname = 'Bangladesh') => {
   form.comment.value = '';
   await displayComment();
 });
-displayComment();
 
 export {
-  countryInfo, getComments, createNewComment, commentBtn, userName, comment,
+  countryInfo, getComments, createNewComment, commentBtn, userName, comment, displayComment,
 };
