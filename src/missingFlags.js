@@ -34,5 +34,4 @@ const mf = {
   'Western Sahara': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Flag_of_the_Sahrawi_Arab_Democratic_Republic.svg/900px-Flag_of_the_Sahrawi_Arab_Democratic_Republic.svg.png',
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { mf };
+export default mf;

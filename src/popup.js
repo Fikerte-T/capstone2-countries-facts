@@ -1,7 +1,7 @@
 import {
   postData, getData, countriesAPIBaseURL, involvementCommentsEndPoint,
 } from './apiRelated.js';
-import { mf } from './missingFlags.js';
+import mf from './missingFlags.js';
 
 const badge = document.querySelector('.badge');
 const userName = document.querySelector('.username');

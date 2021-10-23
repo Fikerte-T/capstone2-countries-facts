@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-loop-func */
 import { getData, countriesAndFlagsURL } from './apiRelated.js';
-import { mf } from './missingFlags.js';
+import mf from './missingFlags.js';
 import { handleLikeFeature, allLikedCountriesArr, getAllLikedCountries } from './likesRelated.js';
 import {
   countryInfo, displayComment, form, createNewComment, formValidation,
@@ -17,12 +17,6 @@ const allCountriesLink = document.querySelector('#allCountriesLink');
 const dropdownItems = [...document.querySelectorAll('.dropdown-item')];
 let allCountriesNb = 0;
 const searchFeedback = document.querySelector('.searchFeedback');
-
-/* eslint-disable no-unused-vars */
-const itemsCounter = () => {
-  const counter = allCountriesArr.length;
-  return counter;
-};
 
 const codeForSingleCountry = (country) => {
   const ctrName = country.name;
@@ -105,7 +99,6 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
         e.target.parentElement.classList.add('activeItem');
         e.target.classList.add('activeItem');
         const from = (nb - 1) * nbPp;
-        // eslint-disable-next-line no-use-before-define
         allParamsAndDisplay(filteredCountriesArr, false, from);
       }
     });
@@ -120,7 +113,6 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
         allNbItems[activePage - 1].parentElement.classList.remove('activeItem');
         allNbItems[activePage - 2].parentElement.classList.add('activeItem');
         const from = (activePage - 2) * nbPp;
-        // eslint-disable-next-line no-use-before-define
         allParamsAndDisplay(filteredCountriesArr, false, from);
         if ((activePage - 1) === 1) {
           document.querySelector('.previousBtn').classList.add('disabled');
@@ -137,7 +129,6 @@ const handleClickOnPaginationElts = (arrOfNbs, nbPp) => {
         allNbItems[activePage - 1].parentElement.classList.remove('activeItem');
         allNbItems[activePage].parentElement.classList.add('activeItem');
         const from = activePage * nbPp;
-        // eslint-disable-next-line no-use-before-define
         allParamsAndDisplay(filteredCountriesArr, false, from);
         if (activePage === (lastPage - 1)) {
           document.querySelector('.nextBtn').classList.add('disabled');
@@ -210,7 +201,6 @@ const displayArrayOfCountries = (arr, shouldHandlePagination = false, sortCrit =
 
   $('#countriesGrid').html('');
   const htmlCode = arrToDisplay.map((el) => codeForSingleCountry(el)).join('');
-  // eslint-disable-next-line no-undef
   $('#countriesGrid').html(htmlCode);
   addCommentClicksListener();
   if (shouldHandlePagination) {

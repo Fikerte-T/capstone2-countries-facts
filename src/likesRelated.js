@@ -29,5 +29,4 @@ const handleLikeFeature = (callback) => {
   });
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export { handleLikeFeature, getAllLikedCountries, allLikedCountriesArr };
