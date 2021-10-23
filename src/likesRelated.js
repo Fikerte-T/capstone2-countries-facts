@@ -1,4 +1,4 @@
-import { postStuff, getStuff, involvementLikesEndPoint } from './api-stuff.js';
+import { postData, getData, involvementLikesEndPoint } from './apiRelated.js';
 
 // eslint-disable-next-line import/no-mutable-exports
 let allLikedCountriesArr = [];
@@ -6,7 +6,7 @@ let allLikedCountriesArr = [];
 const getAllLikedCountries = async () => {
   let res;
   try {
-    res = await getStuff(involvementLikesEndPoint);
+    res = await getData(involvementLikesEndPoint);
   } catch (err) {
     res = [];
   }
@@ -22,7 +22,7 @@ const handleLikeFeature = (callback) => {
       const data = {
         item_id: ctrToLike,
       };
-      await postStuff(involvementLikesEndPoint, data, true);
+      await postData(involvementLikesEndPoint, data, true);
       await getAllLikedCountries();
       callback();
     });

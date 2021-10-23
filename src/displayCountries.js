@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-loop-func */
-import { getStuff, countriesAndFlagsURL } from './api-stuff.js';
+import { getData, countriesAndFlagsURL } from './apiRelated.js';
 import { mf } from './missingFlags.js';
 import { handleLikeFeature, allLikedCountriesArr, getAllLikedCountries } from './likesRelated.js';
 import {
@@ -275,7 +275,7 @@ const handleDisplayAll = () => {
 
 (async () => {
   await getAllLikedCountries();
-  const countriesData = await getStuff(countriesAndFlagsURL);
+  const countriesData = await getData(countriesAndFlagsURL);
   if (countriesData.data) {
     allCountriesArr = countriesData.data;
     allCountriesNb = allCountriesArr.length;

@@ -1,6 +1,6 @@
 import {
-  postStuff, getStuff, countriesAPIBaseURL, involvementCommentsEndPoint,
-} from './api-stuff.js';
+  postData, getData, countriesAPIBaseURL, involvementCommentsEndPoint,
+} from './apiRelated.js';
 import { mf } from './missingFlags.js';
 
 const badge = document.querySelector('.badge');
@@ -19,7 +19,7 @@ const getDialcode = async (countryname) => {
   if (countryname === 'Venezuela') return '+58';
 
   try {
-    const response = await postStuff(dialcodeUrl, {
+    const response = await postData(dialcodeUrl, {
       country: countryname,
     });
     const dialcode = response.data.dial_code;
@@ -31,7 +31,7 @@ const getDialcode = async (countryname) => {
 };
 
 const getCurrency = async (countryname) => {
-  const response = await postStuff(currencyUrl, {
+  const response = await postData(currencyUrl, {
     country: countryname,
   });
   const { currency } = response.data;
@@ -44,7 +44,7 @@ const getFlag = async (countryname) => {
     return mf[countryname];
   }
 
-  const response = await postStuff(flagUrl, {
+  const response = await postData(flagUrl, {
     country: countryname,
   });
 
@@ -57,7 +57,7 @@ const getFlag = async (countryname) => {
 };
 
 const getPopulation = async (countryname) => {
-  const response = await postStuff(populationUrl, {
+  const response = await postData(populationUrl, {
     country: countryname,
   });
   let population;
@@ -69,7 +69,7 @@ const getPopulation = async (countryname) => {
   return population;
 };
 const getCapital = async (countryname) => {
-  const response = await postStuff(capitalUrl,
+  const response = await postData(capitalUrl,
     {
       country: countryname,
     });
@@ -105,7 +105,7 @@ const countryInfo = async (countryname) => {
 };
 
 const createNewComment = async (countryname, username, comment) => {
-  await postStuff(involvementCommentsEndPoint, {
+  await postData(involvementCommentsEndPoint, {
     item_id: countryname,
     username,
     comment,
@@ -114,7 +114,7 @@ const createNewComment = async (countryname, username, comment) => {
 
 const getComments = async (countryname) => {
   const url = `${involvementCommentsEndPoint}?item_id=${encodeURIComponent(countryname)}`;
-  const response = await getStuff(url);
+  const response = await getData(url);
   if (response.error) return [];
   return response;
 };
