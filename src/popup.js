@@ -1,7 +1,6 @@
 import {
   postData, getData, countriesAPIBaseURL, involvementCommentsEndPoint,
 } from './apiRelated.js';
-import mf from './missingFlags.js';
 
 const badge = document.querySelector('.badge');
 const userName = document.querySelector('.username');
@@ -12,7 +11,6 @@ const capitalUrl = `${countriesAPIBaseURL}capital`;
 const populationUrl = `${countriesAPIBaseURL}population`;
 const dialcodeUrl = `${countriesAPIBaseURL}codes`;
 const currencyUrl = `${countriesAPIBaseURL}currency`;
-const flagUrl = `${countriesAPIBaseURL}flag/images`;
 
 const getDialcode = async (countryname) => {
   if (countryname === 'Tanzania') return '+255';
@@ -39,21 +37,10 @@ const getCurrency = async (countryname) => {
   return currency;
 };
 
-const getFlag = async (countryname) => {
-  if (mf[countryname]) {
-    return mf[countryname];
-  }
-
-  const response = await postData(flagUrl, {
-    country: countryname,
-  });
-
-  if (response.data) {
-    const { flag } = response.data;
-    return flag;
-  }
-
-  return 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/338px-No_flag.svg.png';
+const getFlag = (countryname) => {
+  const divParent = document.querySelector(`div[data-country="${countryname}"]`);
+  const flag = divParent.querySelector('img').src;
+  return flag;
 };
 
 const getPopulation = async (countryname) => {
@@ -82,26 +69,23 @@ const numberWithCommas = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',
 
 const countryInfo = async (countryname) => {
   const displayInfo = document.querySelector('.country-info');
-  const flag = await getFlag(countryname);
+  displayInfo.querySelector('.info-name').textContent = countryname;
+  const flag = getFlag(countryname);
+  displayInfo.querySelector('.info-flag').src = flag;
+  displayInfo.querySelector('.info-capital').textContent = 'Loading...';
+  displayInfo.querySelector('.info-currency').textContent = 'Loading...';
+  displayInfo.querySelector('.info-dialcode').textContent = 'Loading...';
+  displayInfo.querySelector('.info-population').textContent = 'Loading...';
+
   const capital = await getCapital(countryname);
+  displayInfo.querySelector('.info-capital').textContent = capital;
   const currency = await getCurrency(countryname);
+  displayInfo.querySelector('.info-currency').textContent = currency;
   const dialcode = await getDialcode(countryname);
+  displayInfo.querySelector('.info-dialcode').textContent = dialcode;
   const population = await getPopulation(countryname);
   const latestPopulation = population[population.length - 1];
-  displayInfo.innerHTML = `
-      <img class="img-fluid rounded mx-auto d-block" src="${flag}" alt="country flag">
-      <h3>${countryname}</h3>
-      <div class="d-inline-flex justify-content-between">
-          <div class ="m-3">
-              <p><b>Capital:</b> ${capital}</p>
-              <p><b>Population:</b> ${numberWithCommas(latestPopulation.value)} (${latestPopulation.year})</p>
-          </div >
-          <div class ="m-3">
-              <p><b>Currency:</b> ${currency}</p>
-              <p><b>Dial-Code:</b> ${dialcode}</p>
-          </div>
-      </div>
-      `;
+  displayInfo.querySelector('.info-population').textContent = `${numberWithCommas(latestPopulation.value)} (${latestPopulation.year})`;
 };
 
 const createNewComment = async (countryname, username, comment) => {
@@ -127,7 +111,6 @@ const commentCounter = (commentsArr) => {
 const displayComment = async (countryname) => {
   const comments = document.querySelector('.comments');
   const commentsData = await getComments(countryname);
-  comments.innerHTML = '';
   comments.innerHTML = commentsData.map((comment) => `<div class="d-inline-flex">
               <p class="creation-date">${comment.creation_date}</p>
               <p class="comment-username">${comment.username}: </p>

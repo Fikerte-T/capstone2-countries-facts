@@ -29,7 +29,7 @@ const codeForSingleCountry = (country) => {
   const fasOrfar = thisCtrLikes.likes > 0 ? 'fas' : 'far';
   const text = thisCtrLikes.likes <= 1 ? 'like' : 'likes';
 
-  return `<div class="card country">
+  return `<div class="card country" data-country="${ctrName}">
                <img class="card-img-top flag" src="${flagUrl}">
                 <div class="card-body">
                     <div class="nameAndLikes">
@@ -49,6 +49,7 @@ const addCommentClicksListener = () => {
     btn.addEventListener('click', async (e) => {
       const country = e.target.getAttribute('data-country');
       form.setAttribute('data-country', country);
+      document.querySelector('.comments').innerHTML = '<p>Loading facts...</p>';
       await countryInfo(country);
       await displayComment(country);
     });
